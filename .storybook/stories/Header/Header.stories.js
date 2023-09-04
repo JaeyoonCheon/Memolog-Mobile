@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import Header from '../../../components/header/Header';
+import Header from '../../../components/headers/Header';
 
 const HeaderMeta = {
   title: 'Header',
