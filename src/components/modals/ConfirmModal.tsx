@@ -21,18 +21,9 @@ export interface AlertModalProps {
 const AlertModal = ({
   innerText = '',
   confirmText = '확인',
-  closeText = '취소',
-  handleConfirm,
   handleClose,
 }: AlertModalProps) => {
   const {disableModal} = useModal();
-
-  const onConfirm = () => {
-    if (handleConfirm) {
-      handleConfirm();
-    }
-    disableModal();
-  };
   const onClose = () => {
     if (handleClose) {
       handleClose();
@@ -54,12 +45,7 @@ const AlertModal = ({
               <Text style={styles.innerText}>{innerText}</Text>
             </View>
             <View style={styles.modalButtonBlock}>
-              <Button text={confirmText} onPress={onConfirm}></Button>
-              <Button
-                text={closeText}
-                onPress={onClose}
-                secondary
-                style={styles.closeButton}></Button>
+              <Button text={confirmText} onPress={onClose} secondary></Button>
             </View>
           </View>
         </View>

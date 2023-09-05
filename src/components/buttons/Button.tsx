@@ -1,14 +1,16 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 interface ButtonProps {
-  style: any;
+  style?: ViewStyle;
   text: string;
-  onPress: () => {};
+  onPress: () => void;
   secondary?: boolean;
 }
 
 interface ButtonStyleProps {
+  style?: ViewStyle;
   secondary?: boolean;
 }
 
