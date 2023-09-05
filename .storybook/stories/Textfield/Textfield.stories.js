@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import Textfield from '../../../components/textfields/Textfield';
+import Textfield from '../../../src/components/textfields/Textfield';
 
 const TextfieldMeta = {
   title: 'Textfield',
