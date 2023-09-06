@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {MODAL_TYPES} from '../components/modals/GlobalModal';
 import {AlertModalProps} from '../components/modals/AlertModal';
 
-const name = 'modalSlice';
+const name = 'modal';
 const {AlertModal} = MODAL_TYPES;
 
 export interface AlertModalType {
@@ -31,7 +31,7 @@ const modalSlice = createSlice({
     },
     closeModal: state => {
       state.modalProps = undefined;
-      state.isActive = true;
+      state.isActive = false;
     },
   },
 });

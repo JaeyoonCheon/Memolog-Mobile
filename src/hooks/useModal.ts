@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAppDispatch} from '../redux/hooks';
-import {ModalType, openModal, closeModal} from '../redux/ModalSlice';
+import {ModalType, openModal, closeModal} from '../redux/modalSlice';
 
 export default function useModal() {
   const dispatch = useAppDispatch();
@@ -10,6 +10,7 @@ export default function useModal() {
     dispatch(openModal({modalType, isActive, modalProps}));
   }
   function disableModal() {
+    console.log('disable');
     dispatch(closeModal());
   }
 
