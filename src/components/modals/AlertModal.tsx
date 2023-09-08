@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 import React from 'react';
 
-import Button from '../buttons/Button';
-import useModal from '../../hooks/useModal';
+import Button from '@components/buttons/Button';
+import useModal from '@hooks/useModal';
 
 export interface AlertModalProps {
   innerText: string;

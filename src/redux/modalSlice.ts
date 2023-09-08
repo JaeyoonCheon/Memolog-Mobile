@@ -1,18 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {MODAL_TYPES} from '../components/modals/GlobalModal';
-import {AlertModalProps} from '../components/modals/AlertModal';
+import {MODAL_TYPES} from '@components/modals/GlobalModal';
+import {AlertModalProps} from '@components/modals/AlertModal';
+import {ConfirmModalProps} from '@/components/modals/ConfirmModal';
 
 const name = 'modal';
 const {AlertModal} = MODAL_TYPES;
 
-export interface AlertModalType {
+export type ModalPropsType = AlertModalProps | ConfirmModalProps;
+export interface ModalType {
   modalType: typeof AlertModal;
   isActive: boolean;
-  modalProps?: AlertModalProps;
+  modalProps?: ModalPropsType;
 }
-
-export type ModalType = AlertModalType;
 
 const initialState: ModalType = {
   modalType: 'AlertModal',

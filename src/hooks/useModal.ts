@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {useAppDispatch} from '../redux/hooks';
-import {ModalType, openModal, closeModal} from '../redux/modalSlice';
+import {useAppDispatch} from '@redux/hooks';
+import {ModalType, openModal, closeModal} from '@redux/modalSlice';
 
 export default function useModal() {
   const dispatch = useAppDispatch();

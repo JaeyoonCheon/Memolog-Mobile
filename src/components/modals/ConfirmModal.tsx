@@ -7,26 +7,24 @@ import {
 } from 'react-native';
 import React from 'react';
 
-import Button from '../buttons/Button';
-import useModal from '../../hooks/useModal';
+import Button from '@components/buttons/Button';
+import useModal from '@hooks/useModal';
 
-export interface AlertModalProps {
+export interface ConfirmModalProps {
   innerText: string;
   confirmText: string;
-  closeText: string;
   handleConfirm: () => void;
-  handleClose: () => void;
 }
 
-const AlertModal = ({
+const ConfirmModal = ({
   innerText = '',
   confirmText = '확인',
-  handleClose,
-}: AlertModalProps) => {
+  handleConfirm,
+}: ConfirmModalProps) => {
   const {disableModal} = useModal();
-  const onClose = () => {
-    if (handleClose) {
-      handleClose();
+  const onConfirm = () => {
+    if (handleConfirm) {
+      handleConfirm();
     }
     disableModal();
   };
@@ -36,7 +34,7 @@ const AlertModal = ({
       <TouchableWithoutFeedback
         onPress={e => {
           if (e.target === e.currentTarget) {
-            onClose();
+            onConfirm();
           }
         }}>
         <View style={styles.modalBackground}>
@@ -45,7 +43,7 @@ const AlertModal = ({
               <Text style={styles.innerText}>{innerText}</Text>
             </View>
             <View style={styles.modalButtonBlock}>
-              <Button text={confirmText} onPress={onClose} secondary></Button>
+              <Button text={confirmText} onPress={onConfirm} secondary></Button>
             </View>
           </View>
         </View>
@@ -54,7 +52,7 @@ const AlertModal = ({
   );
 };
 
-export default AlertModal;
+export default ConfirmModal;
 
 const styles = StyleSheet.create({
   modalBackground: {

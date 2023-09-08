@@ -6,7 +6,10 @@ import {MaterialCommunityIconButton} from './IconButton';
 
 interface ToggleButtonProps {
   items: any[];
-  selected: object;
+  selected: {
+    label: string;
+    value: string;
+  };
   handleSelection: (i: any) => void;
   size: number;
   containerStyle: ViewStyle;

@@ -3,12 +3,14 @@ import {View} from 'react-native';
 import {configureStore, createSlice} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 
-import GlobalModal from '../../../src/components/modals/GlobalModal';
-import Button from '../../../src/components/buttons/Button';
+import GlobalModal from '@components/modals/GlobalModal';
 
 const MockedState = {
   modalType: 'AlertModal',
   isActive: false,
+  modalProps: {
+    innerText: '경고!',
+  },
 };
 
 const MockStore = ({modalState, children}) => (

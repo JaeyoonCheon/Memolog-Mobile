@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {useAppSelector, useAppDispatch} from '../../redux/hooks';
-import AlertModal from './AlertModal';
+import {useAppSelector, useAppDispatch} from '@redux/hooks';
+import AlertModal from '@components/modals/AlertModal';
 
 export const MODAL_TYPES = {
   AlertModal: 'AlertModal',
@@ -13,7 +13,9 @@ const MODAL: any = {
 };
 
 const GlobalModal = () => {
-  const {modalType, isActive} = useAppSelector(state => state.modal);
+  const {modalType, isActive, modalProps} = useAppSelector(
+    state => state.modal,
+  );
   const dispatch = useAppDispatch();
 
   if (!isActive) return null;
@@ -21,7 +23,7 @@ const GlobalModal = () => {
   const renderModal = () => {
     const ModalComponent = MODAL[modalType];
 
-    return <ModalComponent></ModalComponent>;
+    return <ModalComponent {...modalProps}></ModalComponent>;
   };
 
   return <>{renderModal()}</>;

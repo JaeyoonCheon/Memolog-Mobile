@@ -1,23 +1,20 @@
 import React from 'react';
-import {View} from 'react-native';
-import {MyButton} from './Button';
-import Button from '../../../src/components/buttons/Button';
+import { View } from 'react-native';
+import { MyButton } from './Button';
 
 const MyButtonMeta = {
   title: 'MyButton',
-  component: Button,
+  component: MyButton,
   argTypes: {
-    onPress: {action: 'pressed the button'},
+    onPress: { action: 'pressed the button' },
   },
   args: {
     text: 'Hello world',
   },
   decorators: [
-    Story => (
-      <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-        <View style={{width: 150, height: 40}}>
-          <Story />
-        </View>
+    (Story) => (
+      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <Story />
       </View>
     ),
   ],

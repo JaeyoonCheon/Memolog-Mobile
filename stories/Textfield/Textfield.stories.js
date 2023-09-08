@@ -1,12 +1,13 @@
 import React from 'react';
 import {View} from 'react-native';
-import Card from '@components/cards/Card';
 
-const CardMeta = {
-  title: 'Card',
-  component: Card,
+import Textfield from '../../../src/components/textfields/Textfield';
+
+const TextfieldMeta = {
+  title: 'Textfield',
+  component: Textfield,
   argTypes: {
-    onPress: {action: 'pressed the Card'},
+    onPress: {action: 'pressed the Textfield'},
   },
   decorators: [
     Story => (
@@ -17,15 +18,10 @@ const CardMeta = {
   ],
 };
 
-export default CardMeta;
+export default TextfieldMeta;
 
 export const Basic = {
   args: {
-    item: {
-      id: 1,
-      title: 'string',
-      form: 'string',
-      nickname: 'string',
-    },
+    label: 'Textfield',
   },
 };

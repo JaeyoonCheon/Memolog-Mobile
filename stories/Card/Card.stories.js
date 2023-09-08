@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import Card from '@components/cards/Card';
+import Card from '../../../src/components/cards/Card';
 
 const CardMeta = {
   title: 'Card',

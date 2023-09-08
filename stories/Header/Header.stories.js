@@ -1,12 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
-import Card from '@components/cards/Card';
+import Header from '../../../src/components/headers/Header';
 
-const CardMeta = {
-  title: 'Card',
-  component: Card,
+const HeaderMeta = {
+  title: 'Header',
+  component: Header,
   argTypes: {
-    onPress: {action: 'pressed the Card'},
+    onPress: {action: 'pressed the Header'},
   },
   decorators: [
     Story => (
@@ -17,15 +17,10 @@ const CardMeta = {
   ],
 };
 
-export default CardMeta;
+export default HeaderMeta;
 
 export const Basic = {
   args: {
-    item: {
-      id: 1,
-      title: 'string',
-      form: 'string',
-      nickname: 'string',
-    },
+    title: 'Header',
   },
 };

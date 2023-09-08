@@ -48,9 +48,10 @@ try {
 const getStories = () => {
   return {
     "./.storybook/stories/Button/Button.stories.js": require("./stories/Button/Button.stories.js"),
+    "./.storybook/stories/Button/NewButton.stories.js": require("./stories/Button/NewButton.stories.js"),
     "./.storybook/stories/Card/Card.stories.js": require("./stories/Card/Card.stories.js"),
     "./.storybook/stories/Header/Header.stories.js": require("./stories/Header/Header.stories.js"),
-    "./.storybook/stories/Modal/AlertModal.stories.jsx": require("./stories/Modal/AlertModal.stories.jsx"),
+    "./.storybook/stories/Modal/AlertModal.stories.js": require("./stories/Modal/AlertModal.stories.js"),
     "./.storybook/stories/Textfield/Textfield.stories.js": require("./stories/Textfield/Textfield.stories.js"),
   };
 };

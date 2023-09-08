@@ -7,27 +7,55 @@ import {
   TouchableWithoutFeedback,
   FlatList,
   useWindowDimensions,
+  Platform,
+  ListRenderItem,
+  DimensionValue,
 } from 'react-native';
+import {FlexStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 import React, {useState, useRef, useEffect, useLayoutEffect} from 'react';
+
+import {DropdownFrame} from '@hooks/useDropdown';
+
+export interface ItemType {
+  label: string;
+  value: string;
+  action: () => void;
+}
+interface DropdownModalProps {
+  isOpened: boolean;
+  handleIsOpened: (f: boolean) => void;
+  selected: ItemType;
+  handleSelected: (i: ItemType) => void;
+  items: ItemType[];
+  frame?: DropdownFrame;
+}
+interface DropdownItemProps {
+  item: ItemType;
+  isSelected: boolean;
+}
+interface frameType {
+  left?: DimensionValue;
+  right?: DimensionValue;
+}
 
 const DropdownModal = ({
   isOpened,
   handleIsOpened,
-  handleSelection,
+  selected,
+  handleSelected,
   items,
   frame,
-  position = 'left',
-}) => {
+}: DropdownModalProps) => {
   const {width: windowWidth} = useWindowDimensions();
-  const [modalPosition, setModalPosition] = useState();
+  const [modalPosition, setModalPosition] = useState<frameType>();
 
-  const DropdownItem = ({item, isSelected}) => {
+  const DropdownItem: ListRenderItem<ItemType> = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.dropdownItem}
         onPress={() => {
           handleIsOpened(false);
-          handleSelection(item);
+          handleSelected(item);
         }}>
         <Text style={styles.itemLabel}>{item.label}</Text>
       </TouchableOpacity>
@@ -35,16 +63,15 @@ const DropdownModal = ({
   };
 
   useLayoutEffect(() => {
-    const frameRight = frame.x + frame.width;
+    if (!frame) return;
+    const frameRight = frame.pageX + frame.width;
 
-    if (position === 'left') {
-      setModalPosition({left: frame.x});
-    } else if (position === 'right') {
-      setModalPosition({right: windowWidth - frameRight});
+    if (windowWidth >= frameRight) {
+      setModalPosition({left: frame.pageX});
     } else {
-      setModalPosition({left: frame.x});
+      setModalPosition({right: windowWidth - frameRight});
     }
-  }, []);
+  }, [frame]);
 
   return (
     <Modal visible={isOpened} transparent>
@@ -56,8 +83,8 @@ const DropdownModal = ({
           <View
             style={[
               styles.dropdown,
-              {
-                top: frame.height + frame.y + 4,
+              frame && {
+                top: frame.height + frame.pageY + 4,
               },
               modalPosition,
             ]}>

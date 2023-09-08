@@ -1,26 +1,25 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState, useRef} from 'react';
 
-import DropdownModal from '../modals/DropdownModal';
+import DropdownModal, {ItemType} from '@components/modals/DropdownModal';
+import useDropdown from '@hooks/useDropdown';
 
-const BaseDropdown = ({
-  items,
-  selected,
-  isOpened,
-  handleSelection,
-  handleIsOpened,
-}) => {
-  const dropdownButtonRef = useRef();
+interface SelectProps {
+  items: ItemType[];
+}
 
-  const [dropdownButtonFrame, setDropdownButtonFrame] = useState();
+const Select = ({items}: SelectProps) => {
+  const {
+    isOpened,
+    setIsOpened,
+    selected,
+    setSelected,
+    dropdownButtonRef,
+    dropdownButtonFrame,
+  } = useDropdown<ItemType>(items);
 
   const onPressMainButton = () => {
-    if (dropdownButtonRef.current && dropdownButtonRef.current.measure) {
-      dropdownButtonRef.current.measure((fx, fy, width, height, x, y) => {
-        setDropdownButtonFrame({width, height, x, y});
-        handleIsOpened(!isOpened);
-      });
-    }
+    setIsOpened(!isOpened);
   };
 
   return (
@@ -34,8 +33,9 @@ const BaseDropdown = ({
           {isOpened && (
             <DropdownModal
               isOpened={isOpened}
-              handleIsOpened={handleIsOpened}
-              handleSelection={handleSelection}
+              handleIsOpened={setIsOpened}
+              selected={selected}
+              handleSelected={setSelected}
               items={items}
               frame={dropdownButtonFrame}
             />
@@ -46,7 +46,7 @@ const BaseDropdown = ({
   );
 };
 
-export default BaseDropdown;
+export default Select;
 
 const styles = StyleSheet.create({
   block: {
