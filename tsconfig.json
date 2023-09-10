@@ -9,7 +9,8 @@
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
       "@styles/*": ["styles/*"],
-      "@redux/*": ["redux/*"]
+      "@redux/*": ["redux/*"],
+      "@types/*": ["types/*"]
     }
   }
 }

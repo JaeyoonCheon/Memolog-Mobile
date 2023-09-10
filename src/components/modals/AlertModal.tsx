@@ -10,13 +10,13 @@ import React from 'react';
 import Button from '@components/buttons/Button';
 import useModal from '@hooks/useModal';
 
-export interface AlertModalProps {
+export type AlertModalProps = {
   innerText: string;
   confirmText: string;
   closeText: string;
   handleConfirm: () => void;
   handleClose: () => void;
-}
+};
 
 const AlertModal = ({
   innerText = '',

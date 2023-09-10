@@ -8,15 +8,16 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
+export interface CardItemProps {
+  id: number;
+  title: string;
+  form: string;
+  nickname: string;
+  thumbnail_url?: string;
+  profile_image_url?: string;
+}
 export interface CardProps {
-  item: {
-    id: number;
-    title: string;
-    form: string;
-    nickname: string;
-    thumbnail_url?: string;
-    profile_image_url: string;
-  };
+  item: CardItemProps;
   onPress: (k: number) => void;
 }
 

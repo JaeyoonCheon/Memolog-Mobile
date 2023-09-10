@@ -22,6 +22,7 @@ module.exports = {
           '@hooks': './src/hooks',
           '@redux': './src/redux',
           '@styles': './src/styles',
+          '@types': './src/types',
         },
       },
     ],
