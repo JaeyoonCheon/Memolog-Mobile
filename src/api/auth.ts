@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {getUserInfo, removeUserInfo} from '@/storage/UserStorage';
+
+import client from './client';
 import {
   initAccess,
   initRefresh,
@@ -10,16 +13,15 @@ import {
   removeRefresh,
   removeExpire,
 } from '@/storage/AuthStorage';
-import {getUserInfo, removeUserInfo} from '@/storage/UserStorage';
-
-import client from './client';
+import {SignInPayload, SignUpPayload, CheckEmailDuplicataion} from 'auth';
 
 export const ACCESS_EXPIRE_TIME = 60;
 
-export const addToken = async (token: string) => {
-  client.defaults.headers.Authorization = `Bearer ${token}`;
-
+export const addToken = async () => {
   try {
+    const token = await getAccess();
+    client.defaults.headers.Authorization = `Bearer ${token}`;
+
     const expireTimeNewDate = new Date(await getExpire());
     const now = new Date();
     const diff = (expireTimeNewDate.getTime() - now.getTime()) / 1000;
@@ -65,8 +67,8 @@ export const refreshToken = async () => {
     const {accessToken, expireTime} = token;
 
     client.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    initAccess(accessToken);
-    initExpire(expireTime);
+    await initAccess(accessToken);
+    await initExpire(expireTime);
   } catch (e) {
     console.log(e);
 
@@ -74,8 +76,28 @@ export const refreshToken = async () => {
   }
 };
 
-const checkRefreshToken = async () => {
+export const checkRefreshToken = async () => {
   const refreshToken = await getRefresh();
 
   return !!refreshToken;
+};
+
+export const signIn = async (payload: SignInPayload) => {
+  const results = await client.post('/auth/signin', payload);
+
+  return results.data;
+};
+
+export const signUp = async (payload: SignUpPayload) => {
+  const results = await client.post('/auth/signup', payload);
+
+  return results.data;
+};
+
+export const checkEmailDuplication = async (
+  payload: CheckEmailDuplicataion,
+) => {
+  const results = await client.post('/auth/check-email-duplicated', payload);
+
+  return results.data;
 };
