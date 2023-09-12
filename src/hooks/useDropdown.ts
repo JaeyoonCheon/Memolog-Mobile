@@ -16,7 +16,7 @@ function useDropdown<T>(elements: T[]) {
   const [dropdownButtonFrame, setDropdownButtonFrame] =
     useState<DropdownFrame>();
 
-  const handleSelection = (item: T) => {
+  const handleSelected = (item: T) => {
     setSelected(item);
   };
   const handleIsOpened = (flag: boolean) => {
@@ -36,10 +36,8 @@ function useDropdown<T>(elements: T[]) {
 
   return {
     selected,
-    setSelected,
     isOpened,
-    setIsOpened,
-    handleSelection,
+    handleSelected,
     handleIsOpened,
     dropdownButtonRef: parentRef,
     dropdownButtonFrame,

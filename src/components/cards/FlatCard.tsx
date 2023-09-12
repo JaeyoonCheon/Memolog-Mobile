@@ -1,21 +1,11 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-interface FlatCardProps {
-  item: {
-    id: number;
-    title: string;
-    form: string;
-    profile_image_url?: string;
-    nickname: string;
-    thumbnail_url?: string;
-  };
-  onPress: () => void;
-}
+import {CardProps} from 'card';
 
-const FlatCard = ({item, onPress}: FlatCardProps) => {
+const FlatCard = ({item, onPress}: CardProps) => {
   return (
-    <TouchableOpacity style={styles.block} onPress={onPress}>
+    <TouchableOpacity style={styles.block} onPress={() => onPress(item.id)}>
       <View style={styles.contents}>
         <View style={styles.titleBlock}>
           <Text style={styles.title}>{item.title}</Text>

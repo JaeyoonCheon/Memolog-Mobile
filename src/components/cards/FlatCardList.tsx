@@ -1,10 +1,10 @@
-import {StyleSheet, FlatList, View} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 import React from 'react';
 
-import Card from './Card';
+import FlatCard from './FlatCard';
 import {CardListProps} from 'card';
 
-const CardList = ({
+const FlatCardList = ({
   data,
   onPressCard,
   onEndReached,
@@ -18,15 +18,13 @@ const CardList = ({
     onRefresh={onRefresh}
     onEndReached={onEndReached}
     data={data}
-    renderItem={({item}) => <Card item={item} onPress={onPressCard}></Card>}
-    numColumns={2}
-    ListEmptyComponent={
-      <View style={{flex: 1, backgroundColor: '#FFFFFF'}}></View>
-    }
+    renderItem={({item}) => (
+      <FlatCard item={item} onPress={onPressCard}></FlatCard>
+    )}
   />
 );
 
-export default CardList;
+export default FlatCardList;
 
 const styles = StyleSheet.create({
   cardList: {

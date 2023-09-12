@@ -6,20 +6,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-
-export interface CardItemProps {
-  id: number;
-  title: string;
-  form: string;
-  nickname: string;
-  thumbnail_url?: string;
-  profile_image_url?: string;
-}
-export interface CardProps {
-  item: CardItemProps;
-  onPress: (k: number) => void;
-}
+import React from 'react';
+import {CardProps} from 'card';
 
 const Card = ({item, onPress}: CardProps) => {
   return (

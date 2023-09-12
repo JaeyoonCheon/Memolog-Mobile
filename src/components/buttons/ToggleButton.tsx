@@ -4,15 +4,17 @@ import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 import {MaterialCommunityIconButton} from './IconButton';
 
+export interface ToggleItemType {
+  label: string;
+  value: string;
+}
+
 interface ToggleButtonProps {
-  items: any[];
-  selected: {
-    label: string;
-    value: string;
-  };
+  items: ToggleItemType[];
+  selected: ToggleItemType;
   handleSelection: (i: any) => void;
   size: number;
-  containerStyle: ViewStyle;
+  containerStyle?: ViewStyle;
 }
 
 const ToggleButton = ({

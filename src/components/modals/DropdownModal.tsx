@@ -19,7 +19,7 @@ import {DropdownFrame} from '@hooks/useDropdown';
 export interface ItemType {
   label: string;
   value: string;
-  action: () => void;
+  action?: () => void;
 }
 interface DropdownModalProps {
   isOpened: boolean;
@@ -28,10 +28,6 @@ interface DropdownModalProps {
   handleSelected: (i: ItemType) => void;
   items: ItemType[];
   frame?: DropdownFrame;
-}
-interface DropdownItemProps {
-  item: ItemType;
-  isSelected: boolean;
 }
 interface frameType {
   left?: DimensionValue;
@@ -54,6 +50,9 @@ const DropdownModal = ({
       <TouchableOpacity
         style={styles.dropdownItem}
         onPress={() => {
+          if (item.action) {
+            item.action();
+          }
           handleIsOpened(false);
           handleSelected(item);
         }}>

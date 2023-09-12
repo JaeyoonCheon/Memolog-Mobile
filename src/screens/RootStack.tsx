@@ -1,10 +1,11 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import MainTab from '@/screens/MainTab';
+import {RootStackParamList} from 'stack';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
   return (
