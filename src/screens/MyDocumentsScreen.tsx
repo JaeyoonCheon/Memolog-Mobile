@@ -49,7 +49,6 @@ const MyDocumentsScreen = () => {
     refetch,
     hasNextPage,
     fetchNextPage,
-    isSuccess,
   } = useInfiniteQuery({
     queryKey: ['Documents', sortSelected.value, orderSelected.value],
     queryFn: ({pageParam = {id: '', cursor: ''}}) =>
@@ -65,15 +64,14 @@ const MyDocumentsScreen = () => {
   const onPressCard = (id: number) => {
     navigation.navigate('Detail', {id});
   };
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    refetch();
+    await refetch();
     setRefreshing(false);
   };
-  const onEndReachFetch = () => {
-    console.log('Fetch');
+  const onEndReachFetch = async () => {
     if (hasNextPage) {
-      fetchNextPage();
+      await fetchNextPage();
     }
   };
 

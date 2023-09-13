@@ -3,7 +3,7 @@ declare module 'stack' {
     MainTab: undefined;
     Splash: undefined;
     Welcome: undefined;
-    MySearch: undefined;
+    Search: undefined;
     SignIn: undefined;
     SignUp: undefined;
     MakeProfile: undefined;
