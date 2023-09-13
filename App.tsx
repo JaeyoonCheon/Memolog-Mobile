@@ -1,16 +1,20 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import RootStack from '@/screens/RootStack';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <RootStack></RootStack>
+      <QueryClientProvider client={queryClient}>
+        <RootStack></RootStack>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 };
 
-// export default App;
-export {default} from './.storybook';
+export default App;
+// export {default} from './.storybook';
