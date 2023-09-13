@@ -1,15 +1,18 @@
 import client from './client';
 import {PageParams, DocumentPayload} from 'document';
 
+import {getData, postData} from './client';
+import {CardItemProps} from 'card';
+
 export const getDocuments = async (
   pageParams: PageParams,
   sort: string,
   order: string,
-) => {
+): Promise<CardItemProps[]> => {
   const {id, cursor} = pageParams;
   const query = `?id=${id}&sort=${sort}&order=${order}&cursor=${cursor}`;
 
-  const results = await client.get(`/document${query}`);
+  const results = await client.get<CardItemProps[]>(`/document${query}`);
 
   return results.data;
 };
@@ -17,11 +20,11 @@ export const getDocuments = async (
 export const searchDocuments = async (
   pageParams: PageParams,
   keyword: string,
-) => {
+): Promise<CardItemProps[]> => {
   const {id, cursor} = pageParams;
   const query = `?id=${id}&keyword=${keyword}&cursor=${cursor}`;
 
-  const results = await client.get(`/document/search${query}`);
+  const results = await client.get<CardItemProps[]>(`/document/search${query}`);
 
   return results.data;
 };
@@ -32,8 +35,8 @@ export const writeDocument = async (payload: DocumentPayload) => {
   return results.data;
 };
 
-export const getDocument = async (id: string) => {
-  const results = await client.get(`/document/${id}`);
+export const getDocument = async (id: string): Promise<CardItemProps> => {
+  const results = await client.get<CardItemProps>(`/document/${id}`);
 
   return results.data;
 };

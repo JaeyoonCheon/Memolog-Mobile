@@ -1,10 +1,7 @@
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {useInfiniteQuery} from '@tanstack/react-query';
 
 import Header from '@components/headers/Header';
@@ -41,14 +38,8 @@ const MyDocumentsScreen = () => {
     {label: 'arrow-down-thin', value: 'DESC'},
     {label: 'arrow-up-thin', value: 'ASC'},
   ];
-  const {
-    isOpened: orderOpened,
-    handleIsOpened: handleOrderOpened,
-    selected: orderSelected,
-    handleSelected: handleOrder,
-    dropdownButtonRef: orderRef,
-    dropdownButtonFrame: orderFrame,
-  } = useDropdown(orderItems);
+  const {selected: orderSelected, handleSelected: handleOrder} =
+    useDropdown(orderItems);
   const [layout, setLayout] = useState('grid');
   const [refreshing, setRefreshing] = useState(false);
 
@@ -58,27 +49,20 @@ const MyDocumentsScreen = () => {
     refetch,
     hasNextPage,
     fetchNextPage,
+    isSuccess,
   } = useInfiniteQuery({
     queryKey: ['Documents', sortSelected.value, orderSelected.value],
     queryFn: ({pageParam = {id: '', cursor: ''}}) =>
       getDocuments(pageParam, sortSelected.value, orderSelected.value),
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage[lastPage.length - 1]
-        ? {
-            id: lastPage[lastPage.length - 1]?.id,
-            cursor: lastPage[lastPage.length - 1][`${sortSelected.value}`],
-          }
-        : undefined;
-    },
   });
 
   const onPressSearch = () => {
     navigation.navigate('MySearch');
   };
-  const onPressLayout = style => {
+  const onPressLayout = (style: string) => {
     setLayout(style);
   };
-  const onPressCard = id => {
+  const onPressCard = (id: number) => {
     navigation.navigate('Detail', {id});
   };
   const onRefresh = () => {
@@ -150,14 +134,14 @@ const MyDocumentsScreen = () => {
       <View style={styles.itemsWrapper}>
         {layout === 'grid' ? (
           <CardList
-            data={documents?.pages.flat()}
+            data={documents?.pages.flat() || []}
             onPressCard={onPressCard}
             onRefresh={onRefresh}
             refreshing={refreshing}
             onEndReached={onEndReachFetch}></CardList>
         ) : (
           <FlatCardList
-            data={documents?.pages.flat()}
+            data={documents?.pages.flat() || []}
             onPressCard={onPressCard}
             onRefresh={onRefresh}
             refreshing={refreshing}
