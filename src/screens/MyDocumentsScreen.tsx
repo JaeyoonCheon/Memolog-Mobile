@@ -56,7 +56,7 @@ const MyDocumentsScreen = () => {
   });
 
   const onPressSearch = () => {
-    navigation.navigate('MySearch');
+    navigation.navigate('Search');
   };
   const onPressLayout = (style: string) => {
     setLayout(style);

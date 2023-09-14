@@ -21,3 +21,25 @@ export const getUserInfo = async (): Promise<string> => {
 export const removeUserInfo = async () => {
   await removeData('UserInfo');
 };
+
+export const initRemember = async (data: boolean): Promise<boolean> => {
+  const hasKey = await containsKey('Remember');
+
+  if (hasKey) {
+    await storeData('Remember', data);
+
+    return true;
+  }
+
+  return false;
+};
+
+export const getRemember = async (): Promise<boolean> => {
+  const result = await getData('Remember');
+
+  return result;
+};
+
+export const removeRemember = async () => {
+  await removeData('Remember');
+};

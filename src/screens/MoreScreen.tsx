@@ -11,76 +11,16 @@ import {useNavigation} from '@react-navigation/native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useMutation} from '@tanstack/react-query';
 import storage from '@react-native-firebase/storage';
-import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
-import {useUserContext} from '@contexts/UserContext';
-import useSignOut from '@hooks/useSignOut';
-import BaseHeader from '@components/headers/BaseHeader';
-import {changeUserProfileImage} from '@api/user';
-import DefaultImage from '@assets/user.png';
+import Header from '@/components/headers/Header';
 
 const MoreScreen = () => {
-  const navigation = useNavigation();
-  const [user, setUser] = useUserContext();
-  const {setItem: setUserInfo} = useAsyncStorage('UserInfo');
-  const [isLoading, signOut] = useSignOut();
-
-  const {mutate: changeProfileImageMutate} = useMutation(
-    changeUserProfileImage,
-    {
-      onSuccess: data => {
-        setUser({
-          ...user,
-          profile_image_url: data.profile_image_url,
-        });
-        setUserInfo(JSON.stringify(user));
-      },
-    },
-  );
-
-  const onPressChangeImage = async () => {
-    try {
-      const image = await launchImageLibrary({
-        mediaType: 'photo',
-        maxWidth: 512,
-        maxHeight: 512,
-        includeBase64: Platform.OS === 'android',
-      });
-
-      if (!image) {
-        throw Error('None Selected Image');
-      }
-
-      const fileName = image.assets[0].fileName;
-      const uploadImageRef = storage().ref('profile_image/' + fileName);
-
-      await uploadImageRef.putFile(image.assets[0].uri);
-      const downloadUrl = await uploadImageRef.getDownloadURL();
-
-      changeProfileImageMutate({
-        profile_image_url: downloadUrl,
-      });
-    } catch (e) {
-      return;
-    }
-  };
-
   return (
     <View style={styles.block}>
-      <BaseHeader title="더 보기"></BaseHeader>
+      <Header title="더 보기"></Header>
       <View style={styles.profileBlock}>
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={onPressChangeImage}>
-          {user?.profile_image_url ? (
-            <Image
-              style={styles.profileImage}
-              source={{uri: user?.profile_image_url}}></Image>
-          ) : (
-            <Image style={styles.profileImage} source={DefaultImage}></Image>
-          )}
-        </TouchableOpacity>
-        <Text style={styles.helloText}>{`${user?.name} 님 안녕하세요!`}</Text>
+        <TouchableOpacity style={styles.profileButton}></TouchableOpacity>
+        <Text style={styles.helloText}>{`test 님 안녕하세요!`}</Text>
       </View>
       <ScrollView>
         <TouchableOpacity style={styles.menuBlock}>
@@ -89,14 +29,7 @@ const MoreScreen = () => {
         <TouchableOpacity style={styles.menuBlock}>
           <Text style={styles.menuLabel}>앱 설정</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.menuBlock}
-          onPress={() => {
-            signOut();
-            {
-              isLoading && navigation.navigate('Splash');
-            }
-          }}>
+        <TouchableOpacity style={styles.menuBlock} onPress={() => {}}>
           <Text style={styles.menuLabel}>로그아웃</Text>
         </TouchableOpacity>
       </ScrollView>

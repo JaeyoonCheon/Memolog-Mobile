@@ -1,10 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {composeWithDevTools} from '@reduxjs/toolkit/dist/devtoolsExtension';
 
 import ModalSlice from './modalSlice';
+import UserSlice from './userSlice';
 
 const store = configureStore({
-  reducer: {modal: ModalSlice},
+  reducer: {modal: ModalSlice, user: UserSlice},
   devTools: process.env.NODE_ENV !== 'production',
 });
 

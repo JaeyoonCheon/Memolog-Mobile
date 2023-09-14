@@ -59,9 +59,7 @@ export const refreshToken = async () => {
 
     client.defaults.headers.Authorization = `Bearer ${refreshToken}`;
 
-    const result = await client.post('/auth/token', {
-      userId: userId,
-    });
+    const result = await client.post('/auth/token');
 
     const {token} = result?.data;
     const {accessToken, expireTime} = token;
