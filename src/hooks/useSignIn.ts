@@ -13,17 +13,15 @@ export default function useSignIn() {
   const queryClient = useQueryClient();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {mutate: signInMutation} = useMutation<
-    User,
-    unknown,
-    SignInPayload,
-    unknown
-  >(signIn, {
-    onSuccess: async data => {
-      queryClient.setQueriesData([QUERY_KEY.user], data);
-      navigation.navigate('MainTab');
+  const signInMutation = useMutation<User, unknown, SignInPayload, unknown>(
+    signIn,
+    {
+      onSuccess: async data => {
+        queryClient.setQueriesData([QUERY_KEY.user], data);
+        navigation.navigate('MainTab');
+      },
     },
-  });
+  );
 
   return signInMutation;
 }

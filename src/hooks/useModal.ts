@@ -6,8 +6,8 @@ import {ModalType, openModal, closeModal} from '@redux/modalSlice';
 export default function useModal() {
   const dispatch = useAppDispatch();
 
-  function enableModal({modalType, isActive, modalProps}: ModalType) {
-    dispatch(openModal({modalType, isActive, modalProps}));
+  function enableModal({modalType, modalProps}: Omit<ModalType, 'isActive'>) {
+    dispatch(openModal({modalType, modalProps}));
   }
   function disableModal() {
     console.log('disable');

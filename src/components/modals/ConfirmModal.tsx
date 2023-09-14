@@ -11,9 +11,9 @@ import Button from '@components/buttons/Button';
 import useModal from '@hooks/useModal';
 
 export interface ConfirmModalProps {
-  innerText: string;
-  confirmText: string;
-  handleConfirm: () => void;
+  innerText?: string;
+  confirmText?: string;
+  handleConfirm?: () => void;
 }
 
 const ConfirmModal = ({

@@ -11,11 +11,11 @@ import Button from '@components/buttons/Button';
 import useModal from '@hooks/useModal';
 
 export type AlertModalProps = {
-  innerText: string;
-  confirmText: string;
-  closeText: string;
-  handleConfirm: () => void;
-  handleClose: () => void;
+  innerText?: string;
+  confirmText?: string;
+  closeText?: string;
+  handleConfirm?: () => void;
+  handleClose?: () => void;
 };
 
 const AlertModal = ({

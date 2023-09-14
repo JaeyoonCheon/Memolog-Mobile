@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useMutation} from '@tanstack/react-query';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, useForm, FormProps} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -16,7 +16,7 @@ import Header from '@components/headers/Header';
 import TextField from '@components/textfields/TextField';
 import Button from '@components/buttons/Button';
 import useSignUp from '@hooks/useSignUp';
-import useAlertModal from '@hooks/useAlertModal';
+import useModal from '@/hooks/useModal';
 import {MaterialIconButton} from '@components/buttons/IconButton';
 import {checkEmailDuplication} from '@api/auth';
 
@@ -39,12 +39,7 @@ const SignUpScreen = () => {
     },
   });
 
-  const {
-    mutate: signUpMutate,
-    isLoading: isSignUpLoading,
-    isSuccess: isSignUpSuccess,
-  } = useSignUp();
-  const {enableModal} = useAlertModal();
+  const {mutate: signUp, isLoading: signUpLoading} = useSignUp();
 
   const {
     mutate: checkMutate,
@@ -58,14 +53,16 @@ const SignUpScreen = () => {
       if (error.response.data.name === 'ER11') {
         const alertMsg = `동일한 이메일이 이미 등록되어있습니다.\n다른 이메일로 등록해주세요.`;
         enableModal({
-          type: 'Alert',
-          props: {
+          modalType: 'ConfirmModal',
+          modalProps: {
             innerText: alertMsg,
           },
         });
       }
     },
   });
+
+  const {enableModal, disableModal} = useModal();
 
   const onPressCheck = async () => {
     const result = await trigger('email');
@@ -82,8 +79,8 @@ const SignUpScreen = () => {
     if (!isEmailChecked) {
       const alertMsg = `이메일 중복 확인이 진행되지 않았습니다.`;
       enableModal({
-        type: 'Alert',
-        props: {
+        modalType: 'ConfirmModal',
+        modalProps: {
           innerText: alertMsg,
         },
       });
@@ -91,7 +88,7 @@ const SignUpScreen = () => {
       return;
     }
 
-    signUpMutate(
+    signUp(
       {
         name: data.name,
         email: data.email,
@@ -198,7 +195,7 @@ const SignUpScreen = () => {
             )}
             name="passwordConfirm"></Controller>
         </View>
-        {isSignUpLoading ? (
+        {signUpLoading ? (
           <ActivityIndicator size="large" color="#22BCCE"></ActivityIndicator>
         ) : (
           <View style={styles.button}>
