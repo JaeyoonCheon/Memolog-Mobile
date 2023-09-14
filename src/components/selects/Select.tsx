@@ -11,15 +11,15 @@ interface SelectProps {
 const Select = ({items}: SelectProps) => {
   const {
     isOpened,
-    setIsOpened,
+    handleIsOpened,
     selected,
-    setSelected,
+    handleSelected,
     dropdownButtonRef,
     dropdownButtonFrame,
   } = useDropdown<ItemType>(items);
 
   const onPressMainButton = () => {
-    setIsOpened(!isOpened);
+    handleIsOpened(!isOpened);
   };
 
   return (
@@ -33,9 +33,9 @@ const Select = ({items}: SelectProps) => {
           {isOpened && (
             <DropdownModal
               isOpened={isOpened}
-              handleIsOpened={setIsOpened}
+              handleIsOpened={handleIsOpened}
               selected={selected}
-              handleSelected={setSelected}
+              handleSelected={handleSelected}
               items={items}
               frame={dropdownButtonFrame}
             />

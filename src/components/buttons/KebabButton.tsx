@@ -13,20 +13,22 @@ interface KebabButtonProps {
 const KebabButton = ({items}: KebabButtonProps) => {
   const {
     isOpened,
-    setIsOpened,
+    handleIsOpened,
     selected,
-    setSelected,
+    handleSelected,
     dropdownButtonRef,
     dropdownButtonFrame,
   } = useDropdown<ItemType>(items);
 
   const onPressMainButton = () => {
-    setIsOpened(!isOpened);
+    handleIsOpened(!isOpened);
   };
   const onPressButton = (item: ItemType) => {
-    setSelected(item);
+    handleSelected(item);
 
-    item.action();
+    if (item.action) {
+      item.action();
+    }
   };
 
   return (
@@ -36,7 +38,7 @@ const KebabButton = ({items}: KebabButtonProps) => {
           {isOpened && (
             <DropdownModal
               isOpened={isOpened}
-              handleIsOpened={setIsOpened}
+              handleIsOpened={handleIsOpened}
               selected={selected}
               handleSelected={onPressButton}
               items={items}

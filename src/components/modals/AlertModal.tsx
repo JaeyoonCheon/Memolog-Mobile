@@ -54,9 +54,9 @@ const AlertModal = ({
               <Text style={styles.innerText}>{innerText}</Text>
             </View>
             <View style={styles.modalButtonBlock}>
-              <Button text={confirmText} onPress={onConfirm}></Button>
+              <Button label={confirmText} onPress={onConfirm}></Button>
               <Button
-                text={closeText}
+                label={closeText}
                 onPress={onClose}
                 secondary
                 style={styles.closeButton}></Button>

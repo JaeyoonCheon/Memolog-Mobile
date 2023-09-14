@@ -43,7 +43,10 @@ const ConfirmModal = ({
               <Text style={styles.innerText}>{innerText}</Text>
             </View>
             <View style={styles.modalButtonBlock}>
-              <Button text={confirmText} onPress={onConfirm} secondary></Button>
+              <Button
+                label={confirmText}
+                onPress={onConfirm}
+                secondary></Button>
             </View>
           </View>
         </View>

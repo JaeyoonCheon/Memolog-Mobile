@@ -4,7 +4,7 @@ import {ViewStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 interface ButtonProps {
   style?: ViewStyle;
-  text: string;
+  label: string;
   onPress: () => void;
   secondary?: boolean;
 }
@@ -14,12 +14,12 @@ interface ButtonStyleProps {
   secondary?: boolean;
 }
 
-const Button = ({style, text, onPress, secondary = false}: ButtonProps) => {
+const Button = ({style, label, onPress, secondary = false}: ButtonProps) => {
   return (
     <TouchableOpacity
       style={[styles({secondary}).block, style]}
       onPress={onPress}>
-      <Text style={styles({secondary}).text}>{text}</Text>
+      <Text style={styles({secondary}).label}>{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -38,7 +38,7 @@ const styles = (props: ButtonStyleProps) =>
       borderWidth: props.secondary ? 1 : undefined,
       borderColor: props.secondary ? '#747878' : undefined,
     },
-    text: {
+    label: {
       fontSize: 16,
 
       color: props.secondary ? '#000000' : '#FFFFFF',
