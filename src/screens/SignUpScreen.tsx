@@ -10,6 +10,7 @@ import {useMutation} from '@tanstack/react-query';
 import {Controller, useForm, FormProps} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {AxiosError} from 'axios';
 
 import {RootStackParamList} from 'stack';
 import Header from '@components/headers/Header';
@@ -18,7 +19,15 @@ import Button from '@components/buttons/Button';
 import useSignUp from '@hooks/useSignUp';
 import useModal from '@/hooks/useModal';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import {checkEmailDuplication} from '@api/auth';
+import {verifyEmail} from '@api/auth';
+import {commonResponse} from 'api';
+
+export interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
 
 const SignUpScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -30,7 +39,7 @@ const SignUpScreen = () => {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
+  } = useForm<SignUpFormData>({
     defaultValues: {
       name: '',
       email: '',
@@ -45,20 +54,18 @@ const SignUpScreen = () => {
     mutate: checkMutate,
     isSuccess: isEmailCheckSuccess,
     isError: isEmailCheckError,
-  } = useMutation(checkEmailDuplication, {
+  } = useMutation(verifyEmail, {
     onSuccess: data => {
       setIsEmailChecked(true);
     },
     onError: error => {
-      if (error.response.data.name === 'ER11') {
-        const alertMsg = `동일한 이메일이 이미 등록되어있습니다.\n다른 이메일로 등록해주세요.`;
-        enableModal({
-          modalType: 'ConfirmModal',
-          modalProps: {
-            innerText: alertMsg,
-          },
-        });
-      }
+      const alertMsg = `동일한 이메일이 이미 등록되어있습니다.\n다른 이메일로 등록해주세요.`;
+      enableModal({
+        modalType: 'ConfirmModal',
+        modalProps: {
+          innerText: alertMsg,
+        },
+      });
     },
   });
 
@@ -75,7 +82,7 @@ const SignUpScreen = () => {
       });
     }
   };
-  const onSubmit = data => {
+  const onSubmit = (data: SignUpFormData) => {
     if (!isEmailChecked) {
       const alertMsg = `이메일 중복 확인이 진행되지 않았습니다.`;
       enableModal({

@@ -1,14 +1,28 @@
 declare module 'auth' {
+  import {User} from 'user';
+  export interface SignIn {
+    token: {
+      accessToken: string;
+    };
+    user: User;
+  }
   export interface SignInPayload {
     email: string;
     password: string;
+  }
+  export interface SignUp {
+    token: {
+      accessToken: string;
+      refreshToken: string;
+    };
+    user: User;
   }
   export interface SignUpPayload {
     name: string;
     email: string;
     password: string;
   }
-  export interface CheckEmailDuplicataion {
+  export interface VerifyEmailPayload {
     email: string;
   }
 }

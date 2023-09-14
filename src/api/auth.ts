@@ -13,7 +13,13 @@ import {
   removeRefresh,
   removeExpire,
 } from '@/storage/AuthStorage';
-import {SignInPayload, SignUpPayload, CheckEmailDuplicataion} from 'auth';
+import {
+  SignInPayload,
+  SignUpPayload,
+  VerifyEmailPayload,
+  SignIn,
+  SignUp,
+} from 'auth';
 
 export const ACCESS_EXPIRE_TIME = 60;
 
@@ -51,9 +57,9 @@ export const refreshToken = async () => {
   try {
     const refreshToken = await getRefresh();
 
-    const {userId} = JSON.parse(await getUserInfo());
+    const {id} = await getUserInfo();
 
-    if (!refreshToken || !userId) {
+    if (!refreshToken || !id) {
       console.log("Can't refresh token");
     }
 
@@ -80,22 +86,22 @@ export const checkRefreshToken = async () => {
   return !!refreshToken;
 };
 
-export const signIn = async (payload: SignInPayload) => {
-  const results = await client.post('/auth/signin', payload);
+export const signIn = async (payload: SignInPayload): Promise<SignIn> => {
+  const results = await client.post<SignIn>('/auth/signin', payload);
 
   return results.data;
 };
 
-export const signUp = async (payload: SignUpPayload) => {
-  const results = await client.post('/auth/signup', payload);
+export const signUp = async (payload: SignUpPayload): Promise<SignUp> => {
+  const results = await client.post<SignUp>('/auth/signup', payload);
 
   return results.data;
 };
 
-export const checkEmailDuplication = async (
-  payload: CheckEmailDuplicataion,
-) => {
-  const results = await client.post('/auth/check-email-duplicated', payload);
+export const verifyEmail = async (
+  payload: VerifyEmailPayload,
+): Promise<boolean> => {
+  const results = await client.post<boolean>('/auth/verifyemail', payload);
 
   return results.data;
 };
