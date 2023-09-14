@@ -6,7 +6,7 @@ import {refreshToken} from '@/api/auth';
 import {getRefresh} from '@/storage/AuthStorage';
 import {getUserInfo, getRemember} from '@/storage/UserStorage';
 
-export default function useLoadAuthEffect() {
+export default function useLoadEffect() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const loadFn = async () => {

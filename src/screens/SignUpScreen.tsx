@@ -167,11 +167,12 @@ const SignUpScreen = () => {
               },
             }}
             render={({field: {onChange, value}}) => (
-              <PasswordField
+              <TextField
                 label="비밀번호"
+                isPassword
                 indicator={errors.password?.message}
                 onChange={onChange}
-                value={value}></PasswordField>
+                value={value}></TextField>
             )}
             name="password"></Controller>
           <Controller
@@ -190,6 +191,7 @@ const SignUpScreen = () => {
             render={({field: {onChange, value}}) => (
               <TextField
                 label="비밀번호 확인"
+                isPassword
                 indicator={errors.passwordConfirm?.message}
                 onChange={onChange}
                 value={value}></TextField>

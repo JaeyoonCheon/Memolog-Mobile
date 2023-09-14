@@ -1,6 +1,7 @@
 import {storeData, getData, removeData, containsKey} from './AsyncStorage';
+import {User} from 'user';
 
-export const initUserInfo = async (data: string): Promise<boolean> => {
+export const initUserInfo = async (data: User): Promise<boolean> => {
   const hasKey = await containsKey('UserInfo');
 
   if (hasKey) {
@@ -12,7 +13,7 @@ export const initUserInfo = async (data: string): Promise<boolean> => {
   return false;
 };
 
-export const getUserInfo = async (): Promise<string> => {
+export const getUserInfo = async (): Promise<User> => {
   const result = await getData('UserInfo');
 
   return result;
