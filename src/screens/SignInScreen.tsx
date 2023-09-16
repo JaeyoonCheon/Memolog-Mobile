@@ -13,17 +13,15 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 import {RootStackParamList} from 'stack';
 import Header from '@components/headers/Header';
-import TextField from '@components/textfields/TextField';
+import TextField from '@/components/textFields/TextField';
 import Button from '@components/buttons/Button';
 import useSignIn from '@hooks/useSignIn';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import {getRemember} from '@/storage/UserStorage';
 import {SignInPayload} from 'auth';
 
-const SignInScreen = async () => {
-  const remember = await getRemember();
+const SignInScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const [isRemember, setIsRemember] = useState(remember);
+  const [isRemember, setIsRemember] = useState(false);
   const {
     control,
     handleSubmit,
@@ -47,8 +45,6 @@ const SignInScreen = async () => {
       email: data.email,
       password: data.password,
     });
-
-    navigation.navigate('MainTab');
   };
 
   return (

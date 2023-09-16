@@ -5,8 +5,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {signIn} from '@/api/auth';
 import {RootStackParamList} from 'stack';
 import {useNavigation} from '@react-navigation/native';
-import {User} from 'user';
-import {SignInPayload, SignIn} from 'auth';
 import {QUERY_KEY} from '@/const/queryKeys';
 
 export default function useSignIn(isRemember: boolean) {

@@ -1,4 +1,4 @@
-import EncryptedStorage from 'react-native-encrypted-storage/lib/typescript/EncryptedStorage';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 // 비동기 메소드에 대한 ErrorBoundary 지정 예정
 

@@ -14,7 +14,7 @@ import {AxiosError} from 'axios';
 
 import {RootStackParamList} from 'stack';
 import Header from '@components/headers/Header';
-import TextField from '@components/textfields/TextField';
+import TextField from '@/components/textFields/TextField';
 import Button from '@components/buttons/Button';
 import useSignUp from '@hooks/useSignUp';
 import useModal from '@/hooks/useModal';
@@ -95,16 +95,11 @@ const SignUpScreen = () => {
       return;
     }
 
-    signUp(
-      {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      },
-      {
-        onSuccess: () => navigation.navigate('MakeProfile'),
-      },
-    );
+    signUp({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (

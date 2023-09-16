@@ -8,15 +8,17 @@ import {RootStackParamList} from 'stack';
 
 const SplashScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {state, info: userInfo} = useAppSelector(state => state.user);
+  const {authState} = useAppSelector(state => state.user);
 
   useEffect(() => {
-    if (state === 'online' && userInfo) {
+    if (authState === 'authorizing') {
+      return;
+    } else if (authState === 'authorized') {
       navigation.navigate('MainTab');
     } else {
       navigation.navigate('Welcome');
     }
-  }, [userInfo]);
+  }, [authState]);
 
   return (
     <View style={styles.block}>

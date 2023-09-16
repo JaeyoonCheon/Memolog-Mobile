@@ -1,6 +1,6 @@
 declare module 'auth' {
   import {User} from 'user';
-  export interface SignIn {
+  export interface Auth {
     token: {
       accessToken: string;
     };

@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, TextInput} from 'react-native';
 import React from 'react';
 
-interface Textfield {
+interface TextField {
   label: string;
   indicator: string | undefined;
   onChange: () => void;
@@ -9,13 +9,13 @@ interface Textfield {
   isPassword?: boolean;
 }
 
-const Textfield = ({
+const TextField = ({
   label = '',
   indicator = '',
   onChange,
   value = '',
   isPassword = false,
-}: Textfield) => {
+}: TextField) => {
   return (
     <View style={styles.block}>
       <View style={styles.labelBlock}>
@@ -31,7 +31,7 @@ const Textfield = ({
   );
 };
 
-export default Textfield;
+export default TextField;
 
 const styles = StyleSheet.create({
   block: {},

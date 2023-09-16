@@ -17,7 +17,7 @@ import {
   SignInPayload,
   SignUpPayload,
   VerifyEmailPayload,
-  SignIn,
+  Auth,
   SignUp,
 } from 'auth';
 
@@ -80,14 +80,24 @@ export const refreshToken = async () => {
   }
 };
 
-export const checkRefreshToken = async () => {
-  const refreshToken = await getRefresh();
+export const newRefreshToken = async (token: string): Promise<Auth> => {
+  client.defaults.headers.Authorization = `Bearer ${token}`;
 
-  return !!refreshToken;
+  const result = await client.post<Auth>('/auth/refresh');
+
+  return result.data;
 };
 
-export const signIn = async (payload: SignInPayload): Promise<SignIn> => {
-  const results = await client.post<SignIn>('/auth/signin', payload);
+export const checkToken = async (token: string): Promise<Auth> => {
+  client.defaults.headers.Authorization = `Bearer ${token}`;
+
+  const result = await client.post<Auth>('/auth/check');
+
+  return result.data;
+};
+
+export const signIn = async (payload: SignInPayload): Promise<Auth> => {
+  const results = await client.post<Auth>('/auth/signin', payload);
 
   return results.data;
 };
