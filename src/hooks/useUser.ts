@@ -4,21 +4,23 @@ import {useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from '@/const/queryKeys';
 import {getUser} from '@/api/user';
 import {User} from 'user';
-import {initUserInfo, getUserInfo, removeUserInfo} from '@/storage/UserStorage';
+import {initUserInfo, removeUserInfo} from '@/storage/UserStorage';
 
-export default async function useUser() {
-  const initUserData = await getUserInfo();
-
+export default function useUser() {
   const {data: user} = useQuery<User | null>(
     [QUERY_KEY.user],
-    async (): Promise<User | null> => getUser(user),
+    async (): Promise<User | null> => getUser(),
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-      initialData: initUserData,
+      retry: false,
+      initialData: null,
     },
   );
+
+  console.log('useUser');
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
@@ -28,5 +30,5 @@ export default async function useUser() {
     }
   }, [user]);
 
-  return {user: user ?? null};
+  return user ?? null;
 }

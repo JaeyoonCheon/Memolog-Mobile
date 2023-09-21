@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {TouchableOpacity, DimensionValue} from 'react-native';
 
 export interface DropdownFrame {

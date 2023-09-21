@@ -18,7 +18,7 @@ const SplashScreen = () => {
     } else {
       navigation.navigate('Welcome');
     }
-  }, [authState]);
+  }, []);
 
   return (
     <View style={styles.block}>

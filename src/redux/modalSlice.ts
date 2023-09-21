@@ -20,8 +20,6 @@ const initialState: ModalType = {
     innerText: '',
     closeText: '취소',
     confirmText: '확인',
-    handleClose: () => {},
-    handleConfirm: () => {},
   },
 };
 

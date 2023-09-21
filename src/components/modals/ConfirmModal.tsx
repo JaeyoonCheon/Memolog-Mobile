@@ -13,19 +13,14 @@ import useModal from '@hooks/useModal';
 export interface ConfirmModalProps {
   innerText?: string;
   confirmText?: string;
-  handleConfirm?: () => void;
 }
 
 const ConfirmModal = ({
   innerText = '',
   confirmText = '확인',
-  handleConfirm,
 }: ConfirmModalProps) => {
   const {disableModal} = useModal();
   const onConfirm = () => {
-    if (handleConfirm) {
-      handleConfirm();
-    }
     disableModal();
   };
 

@@ -14,29 +14,19 @@ export type AlertModalProps = {
   innerText?: string;
   confirmText?: string;
   closeText?: string;
-  handleConfirm?: () => void;
-  handleClose?: () => void;
 };
 
 const AlertModal = ({
   innerText = '',
   confirmText = '확인',
   closeText = '취소',
-  handleConfirm,
-  handleClose,
 }: AlertModalProps) => {
   const {disableModal} = useModal();
 
   const onConfirm = () => {
-    if (handleConfirm) {
-      handleConfirm();
-    }
     disableModal();
   };
   const onClose = () => {
-    if (handleClose) {
-      handleClose();
-    }
     disableModal();
   };
 

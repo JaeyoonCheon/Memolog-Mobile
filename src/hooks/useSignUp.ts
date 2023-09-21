@@ -5,17 +5,20 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {signUp} from '@/api/auth';
 import {RootStackParamList} from 'stack';
 import {useNavigation} from '@react-navigation/native';
-import {User} from 'user';
-import {SignUpPayload} from 'auth';
 import {QUERY_KEY} from '@/const/queryKeys';
+import {useAppDispatch} from '@/redux/hooks';
+import {setAuthState} from '@/redux/userSlice';
 
 export default function useSignUp() {
+  const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const signUpMutation = useMutation(signUp, {
     onSuccess: async data => {
+      console.log(data);
       queryClient.setQueriesData([QUERY_KEY.user], data);
+      dispatch(setAuthState({authState: 'authorized'}));
       navigation.navigate('MakeProfile');
     },
   });

@@ -5,6 +5,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import store from '@/redux/store';
 import RootStack from '@/screens/RootStack';
+import {Interceptor} from '@/api/interceptor';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,9 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
-          <RootStack></RootStack>
+          <Interceptor>
+            <RootStack></RootStack>
+          </Interceptor>
         </QueryClientProvider>
       </NavigationContainer>
     </Provider>

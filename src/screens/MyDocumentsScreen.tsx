@@ -16,9 +16,13 @@ import Dropdown from '@components/dropdowns/Dropdown';
 import ToggleButton from '@components/buttons/ToggleButton';
 import useDropdown from '@/hooks/useDropdown';
 import {RootStackParamList} from 'stack';
+import useUser from '@/hooks/useUser';
+import {CardItemProps} from 'card';
 
 const MyDocumentsScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  console.log('render MyDocuments');
+  const user = useUser();
 
   const sortItems = [
     {label: '작성일', value: 'created_at'},
@@ -43,17 +47,38 @@ const MyDocumentsScreen = () => {
   const [layout, setLayout] = useState('grid');
   const [refreshing, setRefreshing] = useState(false);
 
+  console.log(user);
+
   const {
     data: documents,
     isFetched,
     refetch,
     hasNextPage,
     fetchNextPage,
+    hasPreviousPage,
   } = useInfiniteQuery({
     queryKey: ['Documents', sortSelected.value, orderSelected.value],
     queryFn: ({pageParam = {id: '', cursor: ''}}) =>
       getDocuments(pageParam, sortSelected.value, orderSelected.value),
+    getNextPageParam: (lastPage, pages) => {
+      console.log('call getNextPage');
+      console.log(lastPage);
+
+      return lastPage.length !== 0
+        ? {
+            id: lastPage[lastPage.length - 1].id,
+            cursor:
+              lastPage[lastPage.length - 1][
+                `${sortSelected.value}` as keyof CardItemProps
+              ],
+          }
+        : undefined;
+    },
+    enabled: !!user,
   });
+
+  console.log(`hasNextPage?? : ${!!hasNextPage}`);
+  console.log(`hasPreviousPage?? : ${!!hasPreviousPage}`);
 
   const onPressSearch = () => {
     navigation.navigate('Search');
@@ -74,10 +99,6 @@ const MyDocumentsScreen = () => {
       await fetchNextPage();
     }
   };
-
-  if (isFetched) {
-    console.log(documents);
-  }
 
   return (
     <View style={styles.block}>

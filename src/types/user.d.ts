@@ -1,8 +1,18 @@
 declare module 'user' {
   export interface User {
-    id: number;
-    name: string;
-    email: string;
+    token: {
+      accessToken: string;
+      refreshToken?: string;
+    };
+    user: {
+      id: number;
+      name: string;
+      email: string;
+      nickname: string;
+      profile_image_url?: string;
+    };
+  }
+  export interface UserProfile {
     nickname: string;
     profile_image_url?: string;
   }

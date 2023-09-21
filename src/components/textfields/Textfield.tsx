@@ -3,8 +3,8 @@ import React from 'react';
 
 interface TextField {
   label: string;
-  indicator: string | undefined;
-  onChange: () => void;
+  indicator?: string;
+  onChange: (text: string) => void;
   value: string;
   isPassword?: boolean;
 }

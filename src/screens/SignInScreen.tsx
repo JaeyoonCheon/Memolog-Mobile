@@ -37,9 +37,7 @@ const SignInScreen = () => {
   const {mutate: signInMutate, isLoading} = useSignIn(isRemember);
 
   const onSubmit = (data: SignInPayload) => {
-    if (isLoading) {
-      return;
-    }
+    console.log('submit');
 
     signInMutate({
       email: data.email,

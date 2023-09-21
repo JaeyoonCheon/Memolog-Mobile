@@ -1,27 +1,20 @@
 import client from './client';
-import {User} from 'user';
+import {User, UserProfile} from 'user';
 
-export const getUser = async (
-  payload: User | null | undefined,
-): Promise<User | null> => {
-  if (!payload) {
-    return null;
-  }
-  const {id} = payload;
-
-  const results = await client.get(`/user/profile/${id}`);
+export const getUser = async (): Promise<User | null> => {
+  const results = await client.get(`/user`);
 
   return results.data;
 };
 
 export const updateUser = async (
-  payload: User | null | undefined,
-): Promise<User | null> => {
+  payload: UserProfile | null | undefined,
+): Promise<UserProfile | null> => {
   if (!payload) {
     return null;
   }
 
-  const results = await client.post(`/user/profile`, payload);
+  const results = await client.post(`/user`, payload);
 
   return results.data;
 };

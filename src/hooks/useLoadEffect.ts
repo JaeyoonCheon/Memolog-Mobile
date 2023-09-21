@@ -32,7 +32,9 @@ export default function useLoadEffect() {
 
       // 자동 로그인 여부
       const isRemember = await getRemember();
+      console.log(isRemember);
       if (!isRemember) {
+        console.log('no autoLogin');
         return;
       }
 
@@ -46,6 +48,7 @@ export default function useLoadEffect() {
 
       const at = await getAccess();
       const decodedAt = jwt_decode<TokenPayload>(at);
+      console.log(decodedAt && 'decodedAt');
       if (decodedAt.exp && decodedAt.exp > now) {
         // access로 검증 후 토큰, 유저 정보 갱신
         const auth = await checkToken(at);
@@ -63,6 +66,7 @@ export default function useLoadEffect() {
       // Refresh 토큰 없음
       const rt = await getRefresh();
       const decodedRt = jwt_decode<TokenPayload>(rt);
+      console.log(decodedRt && 'decodedAt');
       if (decodedRt.exp && decodedRt.exp > now) {
         // refresh로 검증 후 토큰, 유저 정보 갱신
         const auth = await newRefreshToken(rt);
