@@ -34,6 +34,7 @@ const MyDocumentsScreen = () => {
     selected: sortSelected,
     handleSelected: handleSort,
     handleIsOpened: handleSortOpened,
+    setLayout: setSortLayout,
     dropdownButtonRef: sortRef,
     dropdownButtonFrame: sortFrame,
   } = useDropdown(sortItems);
@@ -127,6 +128,7 @@ const MyDocumentsScreen = () => {
             isOpened={sortOpened}
             setIsOpened={handleSortOpened}
             setSelected={handleSort}
+            setLayout={setSortLayout}
             dropdownButtonRef={sortRef}
             dropdownButtonFrame={sortFrame}></Dropdown>
           <ToggleButton

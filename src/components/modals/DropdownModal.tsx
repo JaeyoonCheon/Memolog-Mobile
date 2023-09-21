@@ -63,7 +63,8 @@ const DropdownModal = ({
 
   useLayoutEffect(() => {
     if (!frame) return;
-    const frameRight = frame.pageX + frame.width;
+    console.log(frame);
+    const frameRight = frame.x + frame.width;
 
     if (windowWidth >= frameRight) {
       setModalPosition({left: frame.pageX});
@@ -83,7 +84,7 @@ const DropdownModal = ({
             style={[
               styles.dropdown,
               frame && {
-                top: frame.height + frame.pageY + 4,
+                top: frame.pageY,
               },
               modalPosition,
             ]}>

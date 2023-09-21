@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  LayoutChangeEvent,
+} from 'react-native';
 import React, {useState, useRef} from 'react';
 
 import DropdownModal, {ItemType} from '@components/modals/DropdownModal';
@@ -10,6 +16,7 @@ export interface DropdownProps {
   setIsOpened: (f: boolean) => void;
   selected: ItemType;
   setSelected: (i: ItemType) => void;
+  setLayout: (e: LayoutChangeEvent) => void;
   dropdownButtonRef: React.LegacyRef<TouchableOpacity>;
   dropdownButtonFrame?: DropdownFrame;
 }
@@ -20,6 +27,7 @@ const Dropdown = ({
   setIsOpened,
   selected,
   setSelected,
+  setLayout,
   dropdownButtonRef,
   dropdownButtonFrame,
 }: DropdownProps) => {
@@ -32,6 +40,7 @@ const Dropdown = ({
       <TouchableOpacity
         style={styles.block}
         ref={dropdownButtonRef}
+        onLayout={setLayout}
         onPress={onPressMainButton}>
         <Text style={styles.mainLabel}>{selected.label}</Text>
         <View>

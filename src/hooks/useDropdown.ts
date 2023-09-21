@@ -1,9 +1,11 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {TouchableOpacity, DimensionValue} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {TouchableOpacity, LayoutChangeEvent} from 'react-native';
 
 export interface DropdownFrame {
   width: number;
   height: number;
+  x: number;
+  y: number;
   pageX: number;
   pageY: number;
 }
@@ -23,22 +25,27 @@ function useDropdown<T>(elements: T[]) {
     setIsOpened(flag);
   };
 
-  if (parentRef.current) {
-    parentRef.current.measure((x, y, width, height, pageX, pageY) => {
-      setDropdownButtonFrame({
-        width,
-        height,
-        pageX,
-        pageY,
+  const setLayout = (e: LayoutChangeEvent) => {
+    if (parentRef.current) {
+      parentRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setDropdownButtonFrame({
+          width,
+          height,
+          x,
+          y,
+          pageX,
+          pageY,
+        });
       });
-    });
-  }
+    }
+  };
 
   return {
     selected,
     isOpened,
     handleSelected,
     handleIsOpened,
+    setLayout,
     dropdownButtonRef: parentRef,
     dropdownButtonFrame,
   };
