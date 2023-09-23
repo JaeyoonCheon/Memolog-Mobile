@@ -10,5 +10,6 @@ declare module 'document' {
     scope: string;
     thumbnail_url: string;
     hashtags: string[];
+    created_at: Date;
   }
 }

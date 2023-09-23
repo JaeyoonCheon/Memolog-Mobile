@@ -29,26 +29,36 @@ export const searchDocuments = async (
   return results.data;
 };
 
-export const writeDocument = async (payload: DocumentPayload) => {
-  const results = await client.post('/document', payload);
+export const getDocument = async (id: number): Promise<DocumentPayload> => {
+  const results = await client.get<DocumentPayload>(`/document/${id}`);
 
   return results.data;
 };
 
-export const getDocument = async (id: string): Promise<CardItemProps> => {
-  const results = await client.get<CardItemProps>(`/document/${id}`);
+export const writeDocument = async (
+  payload: DocumentPayload,
+): Promise<boolean> => {
+  const results = await client.post<boolean>('/document', payload);
 
   return results.data;
 };
 
-export const modifyDocument = async (id: string, payload: DocumentPayload) => {
-  const results = await client.post(`/document/${id}`, payload);
+export interface ModifyDocument {
+  id: number;
+  payload: DocumentPayload;
+}
+
+export const modifyDocument = async ({
+  id,
+  payload,
+}: ModifyDocument): Promise<boolean> => {
+  const results = await client.post<boolean>(`/document/${id}`, payload);
 
   return results.data;
 };
 
-export const deleteDocument = async (id: string) => {
-  const results = await client.delete(`/document/${id}`);
+export const deleteDocument = async (id: number): Promise<boolean> => {
+  const results = await client.delete<boolean>(`/document/${id}`);
 
   return results.data;
 };

@@ -12,7 +12,7 @@ import MakeProfileScreen from './MakeProfileScreen';
 import WriteScreen from './WriteScreen';
 import ModifyScreen from './ModifyScreen';
 import DocumentDetailScreen from './DocumentDetailScreen';
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import useLoadEffect from '@/hooks/useLoadEffect';
 
 const Stack = createStackNavigator<RootStackParamList>();

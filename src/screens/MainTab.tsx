@@ -8,9 +8,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import BrowseScreen from './BrowseScreen';
 import MyDocumentsScreen from './MyDocumentsScreen';
-import {BottomTabParamList} from 'tab';
+import {RootTabParamList} from 'navigation';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTab = () => {
   return (
