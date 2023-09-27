@@ -120,7 +120,7 @@ export const signUp = async (payload: SignUpPayload): Promise<User> => {
 export const verifyEmail = async (
   payload: VerifyEmailPayload,
 ): Promise<boolean> => {
-  const results = await client.post<boolean>('/auth/verifyemail', payload);
+  const results = await client.post<boolean>('/auth/verify-email', payload);
 
   return results.data;
 };

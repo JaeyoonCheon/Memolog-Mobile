@@ -15,7 +15,7 @@ import {
 import Dropdown from '@components/dropdowns/Dropdown';
 import ToggleButton from '@components/buttons/ToggleButton';
 import useDropdown from '@/hooks/useDropdown';
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import useUser from '@/hooks/useUser';
 import {CardItemProps} from 'card';
 
