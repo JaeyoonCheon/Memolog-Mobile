@@ -9,7 +9,7 @@ import FlatCardList from '@components/cards/FlatCardList';
 import Header from '@/components/headers/Header';
 import {MaterialIconButton} from '@components/buttons/IconButton';
 import {getOtherDocuments} from '@/api/browse';
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 
 const BrowseScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

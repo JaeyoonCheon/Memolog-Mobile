@@ -3,7 +3,7 @@ import {useQueryClient, useMutation} from '@tanstack/react-query';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {signIn} from '@/api/auth';
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import {useNavigation} from '@react-navigation/native';
 import {QUERY_KEY} from '@/const/queryKeys';
 import {useAppDispatch, useAppSelector} from '@/redux/hooks';

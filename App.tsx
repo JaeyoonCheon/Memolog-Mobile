@@ -14,9 +14,7 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
-          <Interceptor>
-            <RootStack></RootStack>
-          </Interceptor>
+          <RootStack></RootStack>
         </QueryClientProvider>
       </NavigationContainer>
     </Provider>

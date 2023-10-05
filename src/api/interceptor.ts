@@ -16,7 +16,7 @@ export const Interceptor = ({children}: InterceptorProps) => {
   console.log(authState);
   const user = useUser();
   useEffect(() => {
-    client.interceptors.request.use(async function (
+    const authInterceptor = client.interceptors.request.use(async function (
       config: InternalAxiosRequestConfig,
     ) {
       console.log(`intercept request : ${config.url}`);
@@ -29,17 +29,20 @@ export const Interceptor = ({children}: InterceptorProps) => {
 
       return config;
     });
+
+    return client.interceptors.request.eject(authInterceptor);
   }, [authState]);
 
   useEffect(() => {
     client.interceptors.response.use(
       async function (response) {
+        console.log('what?');
         return response;
       },
       async function (error) {
         return Promise.reject(error);
       },
     );
-  });
+  }, []);
   return children;
 };

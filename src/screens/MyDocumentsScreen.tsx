@@ -21,7 +21,6 @@ import {CardItemProps} from 'card';
 
 const MyDocumentsScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  console.log('render MyDocuments');
   const user = useUser();
 
   const sortItems = [
@@ -47,8 +46,6 @@ const MyDocumentsScreen = () => {
     useDropdown(orderItems);
   const [layout, setLayout] = useState('grid');
   const [refreshing, setRefreshing] = useState(false);
-
-  console.log(user);
 
   const {
     data: documents,
@@ -78,8 +75,8 @@ const MyDocumentsScreen = () => {
     enabled: !!user,
   });
 
-  console.log(`hasNextPage?? : ${!!hasNextPage}`);
-  console.log(`hasPreviousPage?? : ${!!hasPreviousPage}`);
+  console.log(`hasNextPage?? : ${hasNextPage}`);
+  console.log(`hasPreviousPage?? : ${hasPreviousPage}`);
 
   const onPressSearch = () => {
     navigation.navigate('Search');

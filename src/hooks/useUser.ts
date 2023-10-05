@@ -9,7 +9,7 @@ import {initUserInfo, removeUserInfo} from '@/storage/UserStorage';
 export default function useUser() {
   const {data: user} = useQuery<User | null>(
     [QUERY_KEY.user],
-    async (): Promise<User | null> => getUser(),
+    async (): Promise<User | null> => await getUser(),
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
@@ -19,7 +19,6 @@ export default function useUser() {
     },
   );
 
-  console.log('useUser');
   console.log(user);
 
   useEffect(() => {

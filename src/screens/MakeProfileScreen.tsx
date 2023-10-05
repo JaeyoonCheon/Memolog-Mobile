@@ -13,7 +13,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {useMutation} from '@tanstack/react-query';
 import storage from '@react-native-firebase/storage';
 
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import TextField from '@components/textFields/TextField';
 import Button from '@components/buttons/Button';
 import {updateUser} from '@api/user';

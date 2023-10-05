@@ -14,10 +14,12 @@ import ModifyScreen from './ModifyScreen';
 import DocumentDetailScreen from './DocumentDetailScreen';
 import {RootStackParamList} from 'navigation';
 import useLoadEffect from '@/hooks/useLoadEffect';
+import useInterceptor from '@/hooks/useInterceptor';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
+  useInterceptor();
   useLoadEffect();
   return (
     <>
