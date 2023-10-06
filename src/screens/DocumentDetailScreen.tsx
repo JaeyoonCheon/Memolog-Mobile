@@ -35,6 +35,7 @@ const DocumentDetailScreen = () => {
     isSuccess,
     isFetched,
   } = useQuery(['Document', id], () => getDocument(id));
+
   const {mutate: deleteMutate} = useMutation(deleteDocument, {
     onSuccess: () => {
       queryCilent.invalidateQueries(['Documents']);

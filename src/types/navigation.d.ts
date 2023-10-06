@@ -1,6 +1,6 @@
 declare module 'navigation' {
   import {CardItemProps} from 'card';
-  import {DocumentPayload} from 'document';
+  import {DocumentDetail} from 'document';
   export type RootStackParamList = {
     MainTab: undefined;
     Splash: undefined;
@@ -12,7 +12,7 @@ declare module 'navigation' {
     Write: undefined;
     Modify: {
       id: number;
-      documentData: DocumentPayload;
+      documentData: DocumentDetail;
     };
     Detail: {id: number};
   };

@@ -1,7 +1,6 @@
 import client from './client';
-import {PageParams, DocumentPayload} from 'document';
+import {PageParams, DocumentPayload, Document, DocumentDetail} from 'document';
 
-import {getData, postData} from './client';
 import {CardItemProps} from 'card';
 
 export const getDocuments = async (
@@ -29,8 +28,8 @@ export const searchDocuments = async (
   return results.data;
 };
 
-export const getDocument = async (id: number): Promise<DocumentPayload> => {
-  const results = await client.get<DocumentPayload>(`/document/${id}`);
+export const getDocument = async (id: number): Promise<DocumentDetail> => {
+  const results = await client.get<DocumentDetail>(`/document/${id}`);
 
   return results.data;
 };

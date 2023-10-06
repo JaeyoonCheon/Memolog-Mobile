@@ -16,7 +16,7 @@ declare module 'document' {
   }
   export interface DocumentDetail extends Document {
     form: string;
-    hashtags: string[];
+    hashtags: Hashtag[];
   }
   export interface DocumentPayload {
     title: string;
@@ -24,7 +24,7 @@ declare module 'document' {
     userId: string;
     scope: string;
     thumbnail_url: string;
-    hashtags: Hashtag[];
+    hashtags: string[];
     created_at: Date;
   }
 }
