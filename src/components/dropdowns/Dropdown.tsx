@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   LayoutChangeEvent,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, {useCallback} from 'react';
 
 import DropdownModal, {ItemType} from '@components/modals/DropdownModal';
 import {DropdownFrame} from '@/hooks/useDropdown';

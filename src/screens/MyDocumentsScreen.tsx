@@ -77,6 +77,7 @@ const MyDocumentsScreen = () => {
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
     retry: false,
+    notifyOnChangeProps: ['data'],
   });
 
   console.log(isStale);

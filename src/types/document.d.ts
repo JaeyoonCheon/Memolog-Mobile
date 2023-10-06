@@ -10,6 +10,10 @@ declare module 'document' {
     created_at: Date;
     scope: string;
   }
+  export interface Hashtag {
+    id: number;
+    name: string;
+  }
   export interface DocumentDetail extends Document {
     form: string;
     hashtags: string[];
@@ -20,7 +24,7 @@ declare module 'document' {
     userId: string;
     scope: string;
     thumbnail_url: string;
-    hashtags: string[];
+    hashtags: Hashtag[];
     created_at: Date;
   }
 }

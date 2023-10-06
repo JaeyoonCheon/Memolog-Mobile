@@ -100,11 +100,11 @@ const DocumentDetailScreen = () => {
         <View style={styles.footer}>
           <View style={styles.hashtagBlock}>
             {isSuccess &&
-              contents?.hashtags &&
-              contents?.hashtags.map(hashtag => (
+              contents.hashtags &&
+              contents.hashtags.map(hashtag => (
                 <Text
                   style={styles.hashtag}
-                  key={hashtag}>{`#${hashtag}`}</Text>
+                  key={hashtag.id}>{`#${hashtag.name}`}</Text>
               ))}
           </View>
           <Text style={styles.createdAt}>
