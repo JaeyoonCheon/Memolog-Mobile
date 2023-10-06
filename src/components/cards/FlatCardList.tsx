@@ -17,6 +17,7 @@ const FlatCardList = ({
     refreshing={refreshing}
     onRefresh={onRefresh}
     onEndReached={onEndReached}
+    onEndReachedThreshold={0.75}
     data={data}
     renderItem={({item}) => (
       <FlatCard item={item} onPress={onPressCard}></FlatCard>

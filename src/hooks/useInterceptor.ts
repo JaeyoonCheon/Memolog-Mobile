@@ -15,6 +15,8 @@ export const useInterceptor = () => {
         }
       }
 
+      console.log(config.url);
+
       return config;
     },
     error => error,

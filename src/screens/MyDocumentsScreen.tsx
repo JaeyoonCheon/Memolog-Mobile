@@ -49,6 +49,9 @@ const MyDocumentsScreen = () => {
 
   const {
     data: documents,
+    isStale,
+    status,
+    fetchStatus,
     isFetched,
     refetch,
     hasNextPage,
@@ -61,7 +64,6 @@ const MyDocumentsScreen = () => {
     getNextPageParam: (lastPage, pages) => {
       console.log('call getNextPage');
       console.log(lastPage);
-
       return lastPage.length !== 0
         ? {
             id: lastPage[lastPage.length - 1].id,
@@ -73,8 +75,12 @@ const MyDocumentsScreen = () => {
         : undefined;
     },
     enabled: !!user,
+    staleTime: 1000 * 60 * 5,
+    retry: false,
   });
 
+  console.log(isStale);
+  console.log(status);
   console.log(`hasNextPage?? : ${hasNextPage}`);
   console.log(`hasPreviousPage?? : ${hasPreviousPage}`);
 
@@ -93,7 +99,9 @@ const MyDocumentsScreen = () => {
     setRefreshing(false);
   };
   const onEndReachFetch = async () => {
+    console.log('End reached');
     if (hasNextPage) {
+      console.log('Has next fetch');
       await fetchNextPage();
     }
   };

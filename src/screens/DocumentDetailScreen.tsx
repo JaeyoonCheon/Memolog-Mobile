@@ -108,7 +108,7 @@ const DocumentDetailScreen = () => {
               ))}
           </View>
           <Text style={styles.createdAt}>
-            {isSuccess && contents.created_at.toISOString()}
+            {isSuccess && new Date(contents.created_at).toISOString()}
           </Text>
         </View>
       </ScrollView>

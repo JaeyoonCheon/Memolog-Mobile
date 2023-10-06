@@ -17,6 +17,7 @@ const CardList = ({
     refreshing={refreshing}
     onRefresh={onRefresh}
     onEndReached={onEndReached}
+    onEndReachedThreshold={0.75}
     data={data}
     renderItem={({item}) => <Card item={item} onPress={onPressCard}></Card>}
     numColumns={2}
