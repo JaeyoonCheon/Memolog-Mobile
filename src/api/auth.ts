@@ -1,5 +1,5 @@
 import axios, {InternalAxiosRequestConfig} from 'axios';
-import {getUserInfo, removeUserInfo} from '@/storage/UserStorage';
+import {getUserInfo, removeUserInfo} from '@storage/UserStorage';
 
 import client from './client';
 import {
@@ -12,10 +12,10 @@ import {
   removeAccess,
   removeRefresh,
   removeExpire,
-} from '@/storage/AuthStorage';
+} from '@storage/AuthStorage';
 import {SignInPayload, SignUpPayload, VerifyEmailPayload} from 'auth';
 import {User} from 'user';
-import useUser from '@/hooks/useUser';
+import useUser from '@hooks/useUser';
 
 export const ACCESS_EXPIRE_TIME = 60;
 
@@ -83,10 +83,10 @@ export const refreshToken = async () => {
   }
 };
 
-export const newRefreshToken = async (token: string): Promise<User> => {
+export const renewRefreshToken = async (token: string): Promise<string> => {
   client.defaults.headers.Authorization = `Bearer ${token}`;
 
-  const result = await client.post<User>('/auth/refresh');
+  const result = await client.post('/auth/renew-refresh');
 
   return result.data;
 };

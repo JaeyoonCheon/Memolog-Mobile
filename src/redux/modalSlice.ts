@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {MODAL_TYPES} from '@components/modals/GlobalModal';
 import {AlertModalProps} from '@components/modals/AlertModal';
-import {ConfirmModalProps} from '@/components/modals/ConfirmModal';
+import {ConfirmModalProps} from '@components/modals/ConfirmModal';
 
 const name = 'modal';
 

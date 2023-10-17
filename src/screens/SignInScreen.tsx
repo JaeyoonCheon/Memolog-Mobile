@@ -11,9 +11,9 @@ import {Controller, useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import Header from '@components/headers/Header';
-import TextField from '@/components/textFields/TextField';
+import TextField from '@components/textFields/TextField';
 import Button from '@components/buttons/Button';
 import useSignIn from '@hooks/useSignIn';
 import {MaterialIconButton} from '@components/buttons/IconButton';

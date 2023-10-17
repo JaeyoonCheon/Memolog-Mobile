@@ -15,7 +15,7 @@ export const updateUser = async (
     return null;
   }
 
-  const results = await client.post(`/user`, payload);
+  const results = await client.post(`/user/profile`, payload);
 
   return results.data;
 };

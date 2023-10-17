@@ -17,7 +17,7 @@ import Header from '@components/headers/Header';
 import KebabButton from '@components/buttons/KebabButton';
 import {getDocument, deleteDocument} from '@api/document';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import useUser from '@/hooks/useUser';
+import useUser from '@hooks/useUser';
 
 const DocumentDetailScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

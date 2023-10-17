@@ -2,7 +2,7 @@ import axios, {AxiosRequestConfig} from 'axios';
 
 import {SOURCE_ADDRESS, SOURCE_PORT} from '@env';
 import {commonResponse} from 'api';
-import {getUserInfo} from '@/storage/UserStorage';
+import {getUserInfo} from '@storage/UserStorage';
 
 console.log(SOURCE_ADDRESS);
 console.log(SOURCE_PORT);

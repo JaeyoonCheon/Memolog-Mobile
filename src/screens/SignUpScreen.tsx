@@ -12,12 +12,12 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AxiosError} from 'axios';
 
-import {RootStackParamList} from 'stack';
+import {RootStackParamList} from 'navigation';
 import Header from '@components/headers/Header';
-import TextField from '@/components/textFields/TextField';
+import TextField from '@components/textFields/TextField';
 import Button from '@components/buttons/Button';
 import useSignUp from '@hooks/useSignUp';
-import useModal from '@/hooks/useModal';
+import useModal from '@hooks/useModal';
 import {MaterialIconButton} from '@components/buttons/IconButton';
 import {verifyEmail} from '@api/auth';
 import {commonResponse} from 'api';

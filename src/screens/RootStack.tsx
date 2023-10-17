@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import MainTab from '@/screens/MainTab';
+import MainTab from '@screens/MainTab';
 import SplashScreen from './SplashScreen';
 import WelcomeScreen from './WelcomeScreen';
 import SearchScreen from './SearchScreen';
@@ -13,8 +13,8 @@ import WriteScreen from './WriteScreen';
 import ModifyScreen from './ModifyScreen';
 import DocumentDetailScreen from './DocumentDetailScreen';
 import {RootStackParamList} from 'navigation';
-import useLoadEffect from '@/hooks/useLoadEffect';
-import useInterceptor from '@/hooks/useInterceptor';
+import useLoadEffect from '@hooks/useLoadEffect';
+import useInterceptor from '@hooks/useInterceptor';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

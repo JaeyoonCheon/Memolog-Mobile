@@ -3,9 +3,8 @@ import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-import store from '@/redux/store';
-import RootStack from '@/screens/RootStack';
-import {Interceptor} from '@/api/interceptor';
+import store from '@redux/store';
+import RootStack from '@screens/RootStack';
 
 const queryClient = new QueryClient();
 

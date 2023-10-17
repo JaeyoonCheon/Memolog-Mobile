@@ -2,12 +2,12 @@ import React, {useEffect} from 'react';
 import jwt_decode, {JwtPayload} from 'jwt-decode';
 import {QueryClient} from '@tanstack/react-query';
 
-import {useAppDispatch} from '@/redux/hooks';
-import {checkToken, newRefreshToken} from '@/api/auth';
-import {getAccess, getRefresh} from '@/storage/AuthStorage';
-import {getRemember} from '@/storage/UserStorage';
-import {QUERY_KEY} from '@/const/queryKeys';
-import {setAuthState} from '@/redux/userSlice';
+import {useAppDispatch} from '@redux/hooks';
+import {checkToken, renewRefreshToken} from '@api/auth';
+import {getAccess, getRefresh} from '@storage/AuthStorage';
+import {getRemember} from '@storage/UserStorage';
+import {QUERY_KEY} from '@const/queryKeys';
+import {setAuthState} from '@redux/userSlice';
 
 interface CustomTokenPayload {
   id: number;
@@ -69,7 +69,7 @@ export default function useLoadEffect() {
       console.log(decodedRt && 'decodedAt');
       if (decodedRt.exp && decodedRt.exp > now) {
         // refresh로 검증 후 토큰, 유저 정보 갱신
-        const auth = await newRefreshToken(rt);
+        const auth = await renewRefreshToken(rt);
         queryClient.setQueriesData([QUERY_KEY.user], auth);
 
         dispatch(

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useQuery} from '@tanstack/react-query';
 
-import {QUERY_KEY} from '@/const/queryKeys';
-import {getUser} from '@/api/user';
+import {QUERY_KEY} from '@const/queryKeys';
+import {getUser} from '@api/user';
 import {User} from 'user';
-import {initUserInfo, removeUserInfo} from '@/storage/UserStorage';
+import {initUserInfo, removeUserInfo} from '@storage/UserStorage';
 
 export default function useUser() {
   const {data: user} = useQuery<User | null>(
@@ -19,12 +19,12 @@ export default function useUser() {
     },
   );
 
-  console.log(user);
-
   useEffect(() => {
+    console.log('update?');
     if (!user) {
       removeUserInfo();
     } else {
+      console.log('storage update');
       initUserInfo(user);
     }
   }, [user]);

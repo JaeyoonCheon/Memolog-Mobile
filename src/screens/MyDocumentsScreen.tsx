@@ -14,9 +14,9 @@ import {
 } from '@components/buttons/IconButton';
 import Dropdown from '@components/dropdowns/Dropdown';
 import ToggleButton from '@components/buttons/ToggleButton';
-import useDropdown from '@/hooks/useDropdown';
+import useDropdown from '@hooks/useDropdown';
 import {RootStackParamList} from 'navigation';
-import useUser from '@/hooks/useUser';
+import useUser from '@hooks/useUser';
 import {CardItemProps} from 'card';
 
 const MyDocumentsScreen = () => {

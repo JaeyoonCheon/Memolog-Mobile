@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
+import {AxiosError} from 'axios';
 
-import client from '@/api/client';
-import {useAppSelector} from '@/redux/hooks';
+import client from '@api/client';
+import {useAppSelector} from '@redux/hooks';
 import useUser from './useUser';
-import {getRefresh} from '@/storage/AuthStorage';
-import {newRefreshToken} from '@/api/auth';
-import {QUERY_KEY} from '@/const/queryKeys';
+import {getRefresh} from '@storage/AuthStorage';
+import {renewRefreshToken} from '@api/auth';
+import {QUERY_KEY} from '@const/queryKeys';
 
 export const useInterceptor = () => {
   const {authState} = useAppSelector(state => state.user);
@@ -30,13 +31,14 @@ export const useInterceptor = () => {
   const responseInterceptor = client.interceptors.response.use(
     value => value,
     async error => {
-      if (error.status === 400 || error.status === 401) {
+      if (error.response.status === 401) {
+        console.log('Token refreshing');
         const refreshToken = await getRefresh();
-        const newUserData = await newRefreshToken(refreshToken);
-        queryClient.setQueryData([QUERY_KEY.user], newUserData);
+        console.log(refreshToken);
+        const newRefreshToken = await renewRefreshToken(refreshToken);
 
         const newRequest = error.config;
-        newRequest.Authorization = `Bearer ${newUserData.token.accessToken}`;
+        newRequest.Authorization = `Bearer ${newRefreshToken}`;
 
         return await client.request(newRequest);
       }

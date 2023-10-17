@@ -8,7 +8,7 @@ import {
 import React, {useCallback} from 'react';
 
 import DropdownModal, {ItemType} from '@components/modals/DropdownModal';
-import {DropdownFrame} from '@/hooks/useDropdown';
+import {DropdownFrame} from '@hooks/useDropdown';
 
 export interface DropdownProps {
   items: ItemType[];

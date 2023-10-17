@@ -7,9 +7,12 @@
       "@api/*": ["api/*"],
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
+      "@const/*": ["const/*"],
       "@hooks/*": ["hooks/*"],
-      "@styles/*": ["styles/*"],
       "@redux/*": ["redux/*"],
+      "@screens/*": ["screens/*"],
+      "@storage/*": ["storage/*"],
+      "@styles/*": ["styles/*"],
       "@types/*": ["types/*"]
     }
   }

@@ -18,9 +18,9 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 import {RootStackParamList, RootTabParamList} from 'navigation';
 import Header from '@components/headers/Header';
-import {modifyDocument} from '@/api/document';
+import {modifyDocument} from '@api/document';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import useUser from '@/hooks/useUser';
+import useUser from '@hooks/useUser';
 
 const imgRegex = /<img.*?src=["|'](.*?)["|']/gm;
 const hashtagRegex = /#([0-9a-zA-Z가-힣]*)/g;

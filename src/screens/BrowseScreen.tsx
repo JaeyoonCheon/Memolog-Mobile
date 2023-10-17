@@ -6,9 +6,9 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 
 import CardList from '@components/cards/CardList';
 import FlatCardList from '@components/cards/FlatCardList';
-import Header from '@/components/headers/Header';
+import Header from '@components/headers/Header';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import {getOtherDocuments} from '@/api/browse';
+import {getOtherDocuments} from '@api/browse';
 import {RootStackParamList} from 'navigation';
 
 const BrowseScreen = () => {

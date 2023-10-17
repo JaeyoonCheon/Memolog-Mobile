@@ -12,7 +12,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {useMutation} from '@tanstack/react-query';
 import storage from '@react-native-firebase/storage';
 
-import Header from '@/components/headers/Header';
+import Header from '@components/headers/Header';
 
 const MoreScreen = () => {
   return (
@@ -24,10 +24,10 @@ const MoreScreen = () => {
       </View>
       <ScrollView>
         <TouchableOpacity style={styles.menuBlock}>
-          <Text style={styles.menuLabel}>닉네임 변경</Text>
+          <Text style={styles.menuLabel}>앱 설정</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuBlock}>
-          <Text style={styles.menuLabel}>앱 설정</Text>
+          <Text style={styles.menuLabel}>닉네임 변경</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuBlock} onPress={() => {}}>
           <Text style={styles.menuLabel}>로그아웃</Text>
