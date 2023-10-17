@@ -20,7 +20,6 @@ import useSignUp from '@hooks/useSignUp';
 import useModal from '@hooks/useModal';
 import {MaterialIconButton} from '@components/buttons/IconButton';
 import {verifyEmail} from '@api/auth';
-import {commonResponse} from 'api';
 
 export interface SignUpFormData {
   name: string;

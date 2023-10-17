@@ -5,8 +5,8 @@ import {AxiosError} from 'axios';
 import client from '@api/client';
 import {useAppSelector} from '@redux/hooks';
 import useUser from './useUser';
-import {getRefresh} from '@storage/AuthStorage';
-import {renewRefreshToken} from '@api/auth';
+import {getRefresh, initRefresh} from '@storage/AuthStorage';
+import {refreshToken, renewRefreshToken} from '@api/auth';
 import {QUERY_KEY} from '@const/queryKeys';
 
 export const useInterceptor = () => {
@@ -31,16 +31,35 @@ export const useInterceptor = () => {
   const responseInterceptor = client.interceptors.response.use(
     value => value,
     async error => {
+      const errorBody = error.response.data;
+      console.error(error);
+      const newRequest = error.config;
       if (error.response.status === 401) {
-        console.log('Token refreshing');
-        const refreshToken = await getRefresh();
-        console.log(refreshToken);
-        const newRefreshToken = await renewRefreshToken(refreshToken);
+        if (errorBody.errorCode === 2000 || errorBody.errorCode === 2001) {
+          console.log('Token refreshing');
+          const storedRefreshToken = await getRefresh();
+          console.log(storedRefreshToken);
 
-        const newRequest = error.config;
-        newRequest.Authorization = `Bearer ${newRefreshToken}`;
+          const token = await refreshToken(storedRefreshToken);
 
-        return await client.request(newRequest);
+          newRequest.Authorization = `Bearer ${token}`;
+
+          return await client.request(newRequest);
+        }
+        if (errorBody.errorCode === 2004 || errorBody.errorCode === 2007) {
+          if (user && user.token && user.token.accessToken) {
+            const newRefreshToken = await renewRefreshToken(
+              user.token.accessToken,
+            );
+            await initRefresh(newRefreshToken);
+
+            const token = await refreshToken(newRefreshToken);
+
+            newRequest.Authorization = `Bearer ${token}`;
+
+            return await client.request(newRequest);
+          }
+        }
       }
 
       return Promise.reject(error);
@@ -50,7 +69,7 @@ export const useInterceptor = () => {
   useEffect(() => {
     return () => {
       client.interceptors.request.eject(requestInterceptor);
-      client.interceptors.request.eject(responseInterceptor);
+      client.interceptors.response.eject(responseInterceptor);
     };
   }, [requestInterceptor, responseInterceptor]);
 };

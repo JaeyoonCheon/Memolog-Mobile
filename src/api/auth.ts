@@ -38,9 +38,9 @@ export const addToken = async (config: InternalAxiosRequestConfig) => {
     // console.log(`expire : ${expireTimeNewDate}`);
     // console.log(`diff : ${diff}`);
 
-    if (diff < ACCESS_EXPIRE_TIME) {
-      await refreshToken();
-    }
+    // if (diff < ACCESS_EXPIRE_TIME) {
+    //   await refreshToken();
+    // }
   } catch (e) {
     console.log(e);
     await removeUserInfo();
@@ -55,32 +55,12 @@ export const removeToken = (config: InternalAxiosRequestConfig) => {
   config.headers['Authorization'] = null;
 };
 
-export const refreshToken = async () => {
-  try {
-    const refreshToken = await getRefresh();
+export const refreshToken = async (token: string): Promise<string> => {
+  client.defaults.headers.Authorization = `Bearer ${token}`;
 
-    const {user} = await getUserInfo();
-    const {id} = user;
+  const result = await client.post('/auth/refresh');
 
-    if (!refreshToken || !id) {
-      console.log("Can't refresh token");
-    }
-
-    client.defaults.headers.Authorization = `Bearer ${refreshToken}`;
-
-    const result = await client.post('/auth/token');
-
-    const {token} = result?.data;
-    const {accessToken, expireTime} = token;
-
-    client.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    await initAccess(accessToken);
-    await initExpire(expireTime);
-  } catch (e) {
-    console.log(e);
-
-    throw new Error('Token Error');
-  }
+  return result.data;
 };
 
 export const renewRefreshToken = async (token: string): Promise<string> => {
