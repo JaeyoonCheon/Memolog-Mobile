@@ -4,7 +4,7 @@ import {User} from 'user';
 export const initUserInfo = async (data: User): Promise<boolean> => {
   const hasKey = await containsKey('UserInfo');
 
-  if (hasKey) {
+  if (!hasKey) {
     await storeData('UserInfo', data);
 
     return true;
@@ -24,9 +24,11 @@ export const removeUserInfo = async () => {
 };
 
 export const initRemember = async (data: boolean): Promise<boolean> => {
+  console.log(data);
   const hasKey = await containsKey('Remember');
 
-  if (hasKey) {
+  console.log(hasKey);
+  if (!hasKey) {
     await storeData('Remember', data);
 
     return true;
@@ -38,7 +40,9 @@ export const initRemember = async (data: boolean): Promise<boolean> => {
 export const getRemember = async (): Promise<boolean> => {
   const result = await getData('Remember');
 
-  return result;
+  console.log(`in storage ${result}`);
+
+  return !!result;
 };
 
 export const removeRemember = async () => {

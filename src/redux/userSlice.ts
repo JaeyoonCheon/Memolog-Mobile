@@ -7,7 +7,7 @@ export interface UserType {
 }
 
 const initialState: UserType = {
-  authState: 'unauthorized',
+  authState: 'authorizing',
 };
 
 const userSlice = createSlice({

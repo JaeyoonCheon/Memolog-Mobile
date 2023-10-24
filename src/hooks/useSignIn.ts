@@ -10,6 +10,7 @@ import {useAppDispatch, useAppSelector} from '@redux/hooks';
 import {setAuthState} from '@redux/userSlice';
 import {getRefresh, initRefresh} from '@storage/AuthStorage';
 import {renewRefreshToken} from '@api/auth';
+import {initRemember} from '@/storage/UserStorage';
 
 export default function useSignIn(isRemember: boolean) {
   const dispatch = useAppDispatch();
@@ -19,9 +20,11 @@ export default function useSignIn(isRemember: boolean) {
 
   const signInMutation = useMutation(signIn, {
     onSuccess: async data => {
-      console.log(data);
+      console.log(isRemember);
+      if (isRemember) {
+        await initRemember(true);
+      }
       queryClient.setQueryData([QUERY_KEY.user], data);
-      dispatch(setAuthState({authState: 'authorized'}));
 
       const storedRefresh = await getRefresh();
 
@@ -36,6 +39,7 @@ export default function useSignIn(isRemember: boolean) {
 
         await initRefresh(newRefreshToken ?? '');
       }
+      dispatch(setAuthState({authState: 'authorized'}));
     },
   });
 

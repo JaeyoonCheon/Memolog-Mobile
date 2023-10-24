@@ -3,16 +3,16 @@ import jwt_decode, {JwtPayload} from 'jwt-decode';
 import {QueryClient} from '@tanstack/react-query';
 
 import {useAppDispatch} from '@redux/hooks';
-import {checkToken, renewRefreshToken} from '@api/auth';
+import {refreshToken, renewRefreshToken} from '@api/auth';
+import {getUser} from '@api/user';
 import {getAccess, getRefresh} from '@storage/AuthStorage';
 import {getRemember} from '@storage/UserStorage';
 import {QUERY_KEY} from '@const/queryKeys';
 import {setAuthState} from '@redux/userSlice';
 
-interface CustomTokenPayload {
+interface CustomTokenPayload extends JwtPayload {
   id: number;
 }
-type TokenPayload = JwtPayload & CustomTokenPayload;
 
 export default function useLoadEffect() {
   const queryClient = new QueryClient();
@@ -32,9 +32,7 @@ export default function useLoadEffect() {
 
       // 자동 로그인 여부
       const isRemember = await getRemember();
-      console.log(isRemember);
       if (!isRemember) {
-        console.log('no autoLogin');
         return;
       }
 
@@ -44,46 +42,62 @@ export default function useLoadEffect() {
         }),
       );
 
-      const now = new Date().getTime();
+      let isAccessValid = false;
+      let isRefreshValid = false;
 
-      const at = await getAccess();
-      const decodedAt = jwt_decode<TokenPayload>(at);
-      console.log(decodedAt && 'decodedAt');
-      if (decodedAt.exp && decodedAt.exp > now) {
-        // access로 검증 후 토큰, 유저 정보 갱신
-        const auth = await checkToken(at);
-        queryClient.setQueriesData([QUERY_KEY.user], auth);
+      const now = Math.floor(Date.now() / 1000);
 
+      let at = await getAccess();
+
+      if (at) {
+        const decodedAt = jwt_decode<CustomTokenPayload>(at);
+
+        // access token이 존재 + 만료되지 않았을 경우
+        if (decodedAt && decodedAt.exp && decodedAt.exp > now) {
+          isAccessValid = true;
+        }
+      }
+
+      // refresh token이 존재 + 만료되지 않았을 경우
+      let rt = await getRefresh();
+
+      if (rt) {
+        const decodedRt = jwt_decode<CustomTokenPayload>(rt);
+
+        if (decodedRt && decodedRt.exp && decodedRt.exp > now) {
+          isRefreshValid = true;
+        }
+      }
+
+      if (!isAccessValid && !isRefreshValid) {
         dispatch(
           setAuthState({
-            authState: 'authorized',
+            authState: 'unauthorized',
           }),
         );
-
         return;
+      } else if (!isAccessValid && isRefreshValid) {
+        at = await refreshToken(rt);
+      } else if (isAccessValid && !isRefreshValid) {
+        rt = await renewRefreshToken(at);
       }
 
-      // Refresh 토큰 없음
-      const rt = await getRefresh();
-      const decodedRt = jwt_decode<TokenPayload>(rt);
-      console.log(decodedRt && 'decodedAt');
-      if (decodedRt.exp && decodedRt.exp > now) {
-        // refresh로 검증 후 토큰, 유저 정보 갱신
-        const auth = await renewRefreshToken(rt);
-        queryClient.setQueriesData([QUERY_KEY.user], auth);
+      queryClient.setQueriesData([QUERY_KEY.user], {
+        token: {
+          accessToken: at,
+          refreshToken: rt,
+        },
+      });
 
-        dispatch(
-          setAuthState({
-            authState: 'authorized',
-          }),
-        );
-      }
+      const userData = await getUser();
+      queryClient.setQueriesData([QUERY_KEY.user], {
+        token: {
+          accessToken: at,
+          refreshToken: rt,
+        },
+        user: userData,
+      });
 
-      dispatch(
-        setAuthState({
-          authState: 'unauthorized',
-        }),
-      );
       // 로그인 화면 이동
     };
 
