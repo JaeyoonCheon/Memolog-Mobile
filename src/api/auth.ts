@@ -1,48 +1,54 @@
-import axios, {InternalAxiosRequestConfig} from 'axios';
-import {getUserInfo, removeUserInfo} from '@storage/UserStorage';
-
 import client from './client';
 import {SignInPayload, SignUpPayload, VerifyEmailPayload} from 'auth';
-import {Token} from 'auth';
-import {User} from 'user';
-import {APIResponse} from 'api';
+import {UserQueryState} from 'user';
+import {postData} from './client';
 
-export const refreshToken = async (token: string): Promise<Token> => {
+export const refreshToken = async (token: string): Promise<string> => {
   client.defaults.headers.Authorization = `Bearer ${token}`;
 
-  const result = await client.post<Token>('/auth/refresh');
+  const callResults = await postData<string>('/auth/refresh');
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return result.data;
+  return callResults.result;
 };
 
-export const renewRefreshToken = async (token: string): Promise<Token> => {
+export const renewRefreshToken = async (token: string): Promise<string> => {
   client.defaults.headers.Authorization = `Bearer ${token}`;
 
-  const result = await client.post<Token>('/auth/renew-refresh');
+  const callResults = await postData<string>('/auth/renew-refresh');
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return result.data;
+  return callResults.result;
 };
 
-export const signIn = async (payload: SignInPayload): Promise<User> => {
-  const results = await client.post<User>('/auth/signin', payload);
+export const signIn = async (
+  payload: SignInPayload,
+): Promise<UserQueryState> => {
+  const callResults = await postData<UserQueryState>('/auth/signin', payload);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  console.log(results.data);
-
-  return results.data;
+  return callResults.result;
 };
 
-export const signUp = async (payload: SignUpPayload): Promise<User> => {
-  const results = await client.post<User>('/auth/signup', payload);
+export const signUp = async (
+  payload: SignUpPayload,
+): Promise<UserQueryState> => {
+  const callResults = await postData<UserQueryState>('/auth/signup', payload);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  console.log(results.data);
-
-  return results.data;
+  return callResults.result;
 };
 
 export const verifyEmail = async (
   payload: VerifyEmailPayload,
-): Promise<boolean> => {
-  const results = await client.post<boolean>('/auth/verify-email', payload);
-
-  return results.data;
+): Promise<void> => {
+  await postData<void>('/auth/verify-email', payload);
 };

@@ -1,6 +1,5 @@
-import client from './client';
+import {deleteData, getData, postData} from './client';
 import {PageParams, DocumentPayload, Document, DocumentDetail} from 'document';
-
 import {CardItemProps} from 'card';
 
 export const getDocuments = async (
@@ -11,9 +10,12 @@ export const getDocuments = async (
   const {id, cursor} = pageParams;
   const query = `?id=${id}&sort=${sort}&order=${order}&cursor=${cursor}`;
 
-  const results = await client.get<CardItemProps[]>(`/document${query}`);
+  const callResults = await getData<CardItemProps[]>(`/document${query}`);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
 
 export const searchDocuments = async (
@@ -23,23 +25,29 @@ export const searchDocuments = async (
   const {id, cursor} = pageParams;
   const query = `?id=${id}&keyword=${keyword}&cursor=${cursor}`;
 
-  const results = await client.get<CardItemProps[]>(`/document/search${query}`);
+  const callResults = await getData<CardItemProps[]>(
+    `/document/search${query}`,
+  );
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
 
 export const getDocument = async (id: number): Promise<DocumentDetail> => {
-  const results = await client.get<DocumentDetail>(`/document/${id}`);
+  const callResults = await getData<DocumentDetail>(`/document/${id}`);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
 
 export const writeDocument = async (
   payload: DocumentPayload,
-): Promise<boolean> => {
-  const results = await client.post<boolean>('/document', payload);
-
-  return results.data;
+): Promise<void> => {
+  await postData<void>('/document', payload);
 };
 
 export interface ModifyDocument {
@@ -51,13 +59,14 @@ export const modifyDocument = async ({
   id,
   payload,
 }: ModifyDocument): Promise<boolean> => {
-  const results = await client.post<boolean>(`/document/${id}`, payload);
+  const callResults = await postData<boolean>(`/document/${id}`, payload);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
 
-export const deleteDocument = async (id: number): Promise<boolean> => {
-  const results = await client.delete<boolean>(`/document/${id}`);
-
-  return results.data;
+export const deleteDocument = async (id: number): Promise<void> => {
+  await deleteData<void>(`/document/${id}`);
 };

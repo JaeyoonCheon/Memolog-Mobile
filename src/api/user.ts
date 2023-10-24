@@ -1,21 +1,29 @@
-import client from './client';
+import {getData, postData} from './client';
 import {User, UserProfile} from 'user';
 
 export const getUser = async (): Promise<User | null> => {
-  console.log('get User data');
-  const results = await client.get(`/user`);
+  const callResults = await getData<User | null>(`/user`);
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
 
 export const updateUser = async (
   payload: UserProfile | null | undefined,
 ): Promise<UserProfile | null> => {
-  if (!payload) {
+  if (payload === undefined) {
     return null;
   }
 
-  const results = await client.post(`/user/profile`, payload);
+  const callResults = await postData<UserProfile | null>(
+    `/user/profile`,
+    payload,
+  );
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
 
-  return results.data;
+  return callResults.result;
 };
