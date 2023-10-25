@@ -8,7 +8,8 @@ import {getUser} from '@api/user';
 import {getAccess, getRefresh} from '@storage/AuthStorage';
 import {getRemember} from '@storage/UserStorage';
 import {QUERY_KEY} from '@const/queryKeys';
-import {setAuthState} from '@redux/userSlice';
+import {setAuthState, setToken} from '@redux/authSlice';
+import {setUserState} from '@/redux/userSlice';
 
 interface CustomTokenPayload extends JwtPayload {
   id: number;
@@ -32,7 +33,13 @@ export default function useLoadEffect() {
 
       // 자동 로그인 여부
       const isRemember = await getRemember();
+      console.log(isRemember);
       if (!isRemember) {
+        dispatch(
+          setAuthState({
+            authState: 'unauthorized',
+          }),
+        );
         return;
       }
 
@@ -82,21 +89,9 @@ export default function useLoadEffect() {
         rt = await renewRefreshToken(at);
       }
 
-      queryClient.setQueriesData([QUERY_KEY.user], {
-        token: {
-          accessToken: at,
-          refreshToken: rt,
-        },
-      });
-
       const userData = await getUser();
-      queryClient.setQueriesData([QUERY_KEY.user], {
-        token: {
-          accessToken: at,
-          refreshToken: rt,
-        },
-        user: userData,
-      });
+      dispatch(setToken({accessToken: at, refreshToken: rt}));
+      dispatch(setUserState(userData));
 
       // 로그인 화면 이동
     };

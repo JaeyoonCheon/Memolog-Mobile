@@ -8,7 +8,7 @@ import {RootStackParamList} from 'navigation';
 
 const SplashScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {authState} = useAppSelector(state => state.user);
+  const {authState} = useAppSelector(state => state.auth);
 
   useEffect(() => {
     if (authState === 'authorizing') {

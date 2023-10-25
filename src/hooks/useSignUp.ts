@@ -1,27 +1,39 @@
-import React from 'react';
-import {useQueryClient, useMutation} from '@tanstack/react-query';
+import React, {useEffect} from 'react';
+import {useMutation} from '@tanstack/react-query';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {signUp} from '@api/auth';
 import {RootStackParamList} from 'navigation';
 import {useNavigation} from '@react-navigation/native';
-import {QUERY_KEY} from '@const/queryKeys';
-import {useAppDispatch} from '@redux/hooks';
-import {setAuthState} from '@redux/userSlice';
+import {useAppDispatch, useAppSelector} from '@redux/hooks';
+import {setAuthState, setToken} from '@redux/authSlice';
+import {setUserState} from '@/redux/userSlice';
 
 export default function useSignUp() {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
+  const {authState} = useAppSelector(state => state.auth);
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const signUpMutation = useMutation(signUp, {
     onSuccess: async data => {
-      console.log(data);
-      queryClient.setQueriesData([QUERY_KEY.user], data);
+      const userData = data.user;
+      dispatch(setUserState(userData));
+
+      const newAccessToken = data.token.accessToken;
+      const newRefreshToken = data.token.refreshToken;
+      dispatch(
+        setToken({accessToken: newAccessToken, refreshToken: newRefreshToken}),
+      );
+
       dispatch(setAuthState({authState: 'authorized'}));
-      navigation.navigate('MakeProfile');
     },
   });
+
+  useEffect(() => {
+    if (authState === 'authorized') {
+      navigation.navigate('MakeProfile');
+    }
+  }, [authState]);
 
   return signUpMutation;
 }

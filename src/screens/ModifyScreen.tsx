@@ -16,11 +16,11 @@ import storage from '@react-native-firebase/storage';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {RootStackParamList, RootTabParamList} from 'navigation';
+import {RootStackParamList} from 'navigation';
 import Header from '@components/headers/Header';
 import {modifyDocument} from '@api/document';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import useUser from '@hooks/useUser';
+import {useAppSelector} from '@/redux/hooks';
 
 const imgRegex = /<img.*?src=["|'](.*?)["|']/gm;
 const hashtagRegex = /#([0-9a-zA-Z가-힣]*)/g;
@@ -30,6 +30,7 @@ const ModifyScreen = () => {
   const queryClient = useQueryClient();
   const {params} = useRoute<RouteProp<RootStackParamList, 'Modify'>>();
   const {id, documentData} = params;
+  const {user} = useAppSelector(state => state.user);
 
   const richText = useRef<RichEditor>(null);
   const scrollRef = useRef<ScrollView>(null);
@@ -45,8 +46,6 @@ const ModifyScreen = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [hashtagString, setHashtagString] = useState(arrayToHashtag);
   const [hashtags, setHashtags] = useState<string[]>([]);
-
-  const user = useUser();
 
   const {mutate: modifyMutate, isLoading} = useMutation(modifyDocument, {
     onSuccess: () => {
@@ -80,7 +79,7 @@ const ModifyScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (isSubmit === true) {
+    if (isSubmit === true && user) {
       const scope = isPrivate ? 'private' : 'public';
 
       // 타입 에러만 처리한 임시 수정
@@ -89,7 +88,7 @@ const ModifyScreen = () => {
         payload: {
           title,
           form: contents,
-          userId: String(user?.user.id),
+          userId: String(user.id),
           scope,
           thumbnail_url: thumbnailUrl,
           created_at: new Date(),

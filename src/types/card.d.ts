@@ -4,6 +4,8 @@ declare module 'card' {
     title: string;
     form: string;
     nickname: string;
+    created_at: string;
+    updated_at: string;
     thumbnail_url?: string;
     profile_image_url?: string;
   }

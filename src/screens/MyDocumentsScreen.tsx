@@ -16,12 +16,12 @@ import Dropdown from '@components/dropdowns/Dropdown';
 import ToggleButton from '@components/buttons/ToggleButton';
 import useDropdown from '@hooks/useDropdown';
 import {RootStackParamList} from 'navigation';
-import useUser from '@hooks/useUser';
 import {CardItemProps} from 'card';
+import {useAppSelector} from '@/redux/hooks';
 
 const MyDocumentsScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const user = useUser();
+  const {user} = useAppSelector(state => state.user);
 
   const sortItems = [
     {label: '작성일', value: 'created_at'},

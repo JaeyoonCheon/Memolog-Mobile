@@ -1,6 +1,6 @@
 declare module 'auth' {
   export interface Token {
-    accessToken?: string;
+    accessToken: string;
     refreshToken?: string;
   }
   export interface SignInPayload {

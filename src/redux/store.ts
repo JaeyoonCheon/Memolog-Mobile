@@ -1,10 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 
+import AuthState from './authSlice';
 import ModalSlice from './modalSlice';
 import UserSlice from './userSlice';
 
 const store = configureStore({
-  reducer: {modal: ModalSlice, user: UserSlice},
+  reducer: {auth: AuthState, modal: ModalSlice, user: UserSlice},
   devTools: process.env.NODE_ENV !== 'production',
 });
 

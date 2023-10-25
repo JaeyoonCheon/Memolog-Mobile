@@ -42,7 +42,11 @@ export const getRemember = async (): Promise<boolean> => {
 
   console.log(`in storage ${result}`);
 
-  return !!result;
+  if (!result) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 export const removeRemember = async () => {

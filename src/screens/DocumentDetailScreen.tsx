@@ -12,12 +12,12 @@ import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {RootStackParamList, RootTabParamList} from 'navigation';
+import {RootStackParamList} from 'navigation';
 import Header from '@components/headers/Header';
 import KebabButton from '@components/buttons/KebabButton';
 import {getDocument, deleteDocument} from '@api/document';
 import {MaterialIconButton} from '@components/buttons/IconButton';
-import useUser from '@hooks/useUser';
+import {useAppSelector} from '@/redux/hooks';
 
 const DocumentDetailScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -25,8 +25,7 @@ const DocumentDetailScreen = () => {
   const {width} = useWindowDimensions();
   const {params} = useRoute<RouteProp<RootStackParamList, 'Detail'>>();
   const {id} = params;
-
-  const user = useUser();
+  const {user} = useAppSelector(state => state.user);
 
   let kebabItems = [{label: '검색', value: 'Search', action: () => {}}];
 
@@ -49,7 +48,7 @@ const DocumentDetailScreen = () => {
   if (isSuccess) {
     console.log(contents);
 
-    if (user && Number(contents.userId) === user.user.id) {
+    if (user && contents.userId === user.id) {
       kebabItems = [
         {label: '검색', value: 'Search', action: () => {}},
         {
