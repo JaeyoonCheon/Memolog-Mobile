@@ -8,8 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '@redux/hooks';
 import {setAuthState, setToken} from '@redux/authSlice';
 import {setUserState} from '@/redux/userSlice';
-import {getRefresh, initRefresh} from '@storage/AuthStorage';
-import {renewRefreshToken} from '@api/auth';
+import {initAccess, initRefresh} from '@storage/AuthStorage';
 import {initRemember} from '@/storage/UserStorage';
 
 export default function useSignIn(isRemember: boolean) {
@@ -29,18 +28,12 @@ export default function useSignIn(isRemember: boolean) {
       dispatch(setUserState(userData));
 
       const newAccessToken = data.token.accessToken;
-      dispatch(setToken({accessToken: newAccessToken}));
-
-      const storedRefresh = await getRefresh();
-
-      if (storedRefresh === undefined) {
-        if (newAccessToken) {
-          const newRefreshToken = await renewRefreshToken(newAccessToken);
-
-          dispatch(setToken({refreshToken: newRefreshToken}));
-          await initRefresh(newRefreshToken ?? '');
-        }
-      }
+      const newRefreshToken = data.token.refreshToken;
+      dispatch(
+        setToken({accessToken: newAccessToken, refreshToken: newRefreshToken}),
+      );
+      await initAccess(newAccessToken);
+      await initRefresh(newRefreshToken);
       dispatch(setAuthState({authState: 'authorized'}));
     },
   });

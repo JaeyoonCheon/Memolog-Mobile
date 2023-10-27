@@ -33,7 +33,9 @@ const DocumentDetailScreen = () => {
     data: contents,
     isSuccess,
     isFetched,
-  } = useQuery(['Document', id], () => getDocument(id));
+  } = useQuery(['Document', id], () => getDocument(id), {
+    retry: 0,
+  });
 
   const {mutate: deleteMutate} = useMutation(deleteDocument, {
     onSuccess: () => {

@@ -59,8 +59,10 @@ const MyDocumentsScreen = () => {
     hasPreviousPage,
   } = useInfiniteQuery({
     queryKey: ['Documents', sortSelected.value, orderSelected.value],
-    queryFn: ({pageParam = {id: '', cursor: ''}}) =>
-      getDocuments(pageParam, sortSelected.value, orderSelected.value),
+    queryFn: ({pageParam = {id: '', cursor: ''}}) => {
+      console.log(pageParam);
+      return getDocuments(pageParam, sortSelected.value, orderSelected.value);
+    },
     getNextPageParam: (lastPage, pages) => {
       console.log('call getNextPage');
       console.log(lastPage);

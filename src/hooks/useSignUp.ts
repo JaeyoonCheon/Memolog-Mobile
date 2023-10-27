@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '@redux/hooks';
 import {setAuthState, setToken} from '@redux/authSlice';
 import {setUserState} from '@/redux/userSlice';
+import {initAccess, initRefresh} from '@/storage/AuthStorage';
 
 export default function useSignUp() {
   const dispatch = useAppDispatch();
@@ -24,7 +25,8 @@ export default function useSignUp() {
       dispatch(
         setToken({accessToken: newAccessToken, refreshToken: newRefreshToken}),
       );
-
+      await initAccess(newAccessToken);
+      await initRefresh(newRefreshToken);
       dispatch(setAuthState({authState: 'authorized'}));
     },
   });

@@ -3,7 +3,7 @@ import jwt_decode, {JwtPayload} from 'jwt-decode';
 import {QueryClient} from '@tanstack/react-query';
 
 import {useAppDispatch} from '@redux/hooks';
-import {refreshToken, renewRefreshToken} from '@api/auth';
+import {refreshAccessToken, renewRefreshToken} from '@api/auth';
 import {getUser} from '@api/user';
 import {getAccess, getRefresh} from '@storage/AuthStorage';
 import {getRemember} from '@storage/UserStorage';
@@ -84,7 +84,7 @@ export default function useLoadEffect() {
         );
         return;
       } else if (!isAccessValid && isRefreshValid) {
-        at = await refreshToken(rt);
+        at = await refreshAccessToken(rt);
       } else if (isAccessValid && !isRefreshValid) {
         rt = await renewRefreshToken(at);
       }

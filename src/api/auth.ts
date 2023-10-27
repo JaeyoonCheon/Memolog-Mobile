@@ -3,7 +3,7 @@ import {SignInPayload, SignUpPayload, VerifyEmailPayload} from 'auth';
 import {UserQueryState} from 'user';
 import {postData} from './client';
 
-export const refreshToken = async (token: string): Promise<string> => {
+export const refreshAccessToken = async (token: string): Promise<string> => {
   client.defaults.headers.Authorization = `Bearer ${token}`;
 
   const callResults = await postData<string>('/auth/refresh');

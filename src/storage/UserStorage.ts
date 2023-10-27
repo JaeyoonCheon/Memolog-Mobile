@@ -2,15 +2,9 @@ import {storeData, getData, removeData, containsKey} from './AsyncStorage';
 import {User} from 'user';
 
 export const initUserInfo = async (data: User): Promise<boolean> => {
-  const hasKey = await containsKey('UserInfo');
+  await storeData('UserInfo', data);
 
-  if (!hasKey) {
-    await storeData('UserInfo', data);
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 export const getUserInfo = async (): Promise<User> => {
@@ -24,17 +18,9 @@ export const removeUserInfo = async () => {
 };
 
 export const initRemember = async (data: boolean): Promise<boolean> => {
-  console.log(data);
-  const hasKey = await containsKey('Remember');
+  await storeData('Remember', data);
 
-  console.log(hasKey);
-  if (!hasKey) {
-    await storeData('Remember', data);
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 export const getRemember = async (): Promise<boolean> => {

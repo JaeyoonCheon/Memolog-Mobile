@@ -2,20 +2,23 @@ import React, {useEffect} from 'react';
 
 import client from '@api/client';
 import {useAppDispatch, useAppSelector} from '@redux/hooks';
-import {setToken} from '@redux/authSlice';
+import {setToken, setAccessToken} from '@redux/authSlice';
 import {getRefresh, initRefresh} from '@storage/AuthStorage';
-import {refreshToken, renewRefreshToken} from '@api/auth';
+import {refreshAccessToken, renewRefreshToken} from '@api/auth';
 
 export const useInterceptor = () => {
   const dispatch = useAppDispatch();
-  const {authState, token} = useAppSelector(state => state.auth);
+  const {authState, accessToken, refreshToken} = useAppSelector(
+    state => state.auth,
+  );
 
   const requestInterceptor = client.interceptors.request.use(
     config => {
+      console.log(config);
+      console.log(config.url);
+
       if (!config.headers.Authorization && authState === 'authorized') {
-        if (token && token.accessToken) {
-          config.headers.Authorization = `Bearer ${token.accessToken}`;
-        }
+        config.headers.Authorization = `Bearer ${accessToken}`;
       }
 
       return config;
@@ -26,36 +29,41 @@ export const useInterceptor = () => {
     value => value,
     async error => {
       const errorBody = error.response.data;
-      console.error(error);
+      console.log(errorBody);
       const newRequest = error.config;
       if (error.response.status === 401) {
-        if (errorBody.errorCode === 2000 || errorBody.errorCode === 2001) {
-          const storedRefreshToken = await getRefresh();
+        if (errorBody.errorCode === 2000) {
+          console.log('Please Logout');
+        } else if (errorBody.errorCode === 2001) {
+          console.log('Access token Error');
 
-          const newAccessToken = await refreshToken(storedRefreshToken);
-          dispatch(setToken({accessToken: newAccessToken}));
+          const newAccessToken = await refreshAccessToken(refreshToken);
+          dispatch(setAccessToken({accessToken: newAccessToken}));
+          console.log(newAccessToken);
 
-          newRequest.Authorization = `Bearer ${newAccessToken}`;
+          newRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
           return await client.request(newRequest);
-        }
-        if (errorBody.errorCode === 2004 || errorBody.errorCode === 2007) {
-          if (token && token.accessToken) {
-            const newRefreshToken = await renewRefreshToken(token.accessToken);
-            await initRefresh(newRefreshToken);
+        } else if (errorBody.errorCode === 2003) {
+          console.log('Invalid RefreshToken');
+        } else if (errorBody.errorCode === 2004) {
+          console.log('Refresh token Error');
+          const newRefreshToken = await renewRefreshToken(accessToken);
+          await initRefresh(newRefreshToken);
 
-            const newAccessToken = await refreshToken(newRefreshToken);
-            dispatch(
-              setToken({
-                accessToken: newAccessToken,
-                refreshToken: newRefreshToken,
-              }),
-            );
+          const newAccessToken = await refreshAccessToken(newRefreshToken);
+          dispatch(
+            setToken({
+              accessToken: newAccessToken,
+              refreshToken: newRefreshToken,
+            }),
+          );
 
-            newRequest.Authorization = `Bearer ${newAccessToken}`;
+          newRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-            return await client.request(newRequest);
-          }
+          return await client.request(newRequest);
+        } else if (errorBody.errorCode === 2007) {
+          console.log('Logout');
         }
       }
 

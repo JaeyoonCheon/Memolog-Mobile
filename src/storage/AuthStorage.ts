@@ -5,15 +5,9 @@ import {
 } from './EncryptedStorage';
 
 export const initAccess = async (data: string): Promise<boolean> => {
-  const hasKey = await getEncryptedData('Access');
+  await storeEncryptedData('Access', data);
 
-  if (hasKey === undefined) {
-    await storeEncryptedData('Access', data);
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 export const getAccess = async (): Promise<string> => {
@@ -27,15 +21,9 @@ export const removeAccess = async () => {
 };
 
 export const initRefresh = async (data: string): Promise<boolean> => {
-  const hasKey = await getEncryptedData('Refresh');
+  await storeEncryptedData('Refresh', data);
 
-  if (hasKey === undefined) {
-    await storeEncryptedData('Refresh', data);
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 export const getRefresh = async (): Promise<string> => {
@@ -49,15 +37,9 @@ export const removeRefresh = async () => {
 };
 
 export const initExpire = async (data: string): Promise<boolean> => {
-  const hasKey = await getEncryptedData('Expire');
+  await storeEncryptedData('Expire', data);
 
-  if (hasKey === undefined) {
-    await storeEncryptedData('Expire', data);
-
-    return true;
-  }
-
-  return false;
+  return true;
 };
 
 export const getExpire = async (): Promise<string> => {
