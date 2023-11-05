@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
 interface RankCardProps {
-  isPrimary: boolean;
+  isPrimary?: boolean;
   rankNumber: number;
   label: string;
 }
@@ -11,7 +11,7 @@ interface RankCardStyleProps {
   isPrimary?: boolean;
 }
 
-const RankCard = ({isPrimary, rankNumber, label}: RankCardProps) => {
+const RankCard = ({isPrimary = false, rankNumber, label}: RankCardProps) => {
   return (
     <View style={styles({isPrimary}).block}>
       <View style={styles({isPrimary}).circle}>
