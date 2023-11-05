@@ -7,7 +7,7 @@ export const getHashtagFrequency = async () => {
 };
 
 export const getHashtagTrends = async () => {
-  const results = await client.get('/stat/trends');
+  const results = await client.get('/stat/tag-trends');
 
   return results.data;
 };
