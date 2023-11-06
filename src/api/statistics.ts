@@ -1,13 +1,22 @@
-import client from './client';
+import {getData} from './client';
+import {TagList} from 'chart';
 
-export const getHashtagFrequency = async () => {
-  const results = await client.get('/stat/frequency');
+export const getHashtagFrequency = async (): Promise<TagList[]> => {
+  const callResults = await getData<TagList[]>('/stat/frequency');
 
-  return results.data;
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
+
+  return callResults.result;
 };
 
-export const getHashtagTrends = async () => {
-  const results = await client.get('/stat/tag-trends');
+export const getHashtagTrends = async (): Promise<TagList[]> => {
+  const callResults = await getData<TagList[]>('/stat/tag-trends');
 
-  return results.data;
+  if (!callResults.result) {
+    throw new Error('API call empty result');
+  }
+
+  return callResults.result;
 };

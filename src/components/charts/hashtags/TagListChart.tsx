@@ -1,16 +1,8 @@
 import React, {ComponentType} from 'react';
 import {StyleSheet, Text, View, FlatList, Platform} from 'react-native';
 
-import RankCard from '../../cards/RankCard';
-
-interface TagList {
-  id: string;
-  name: string;
-}
-interface TagListChartProps {
-  data: TagList[];
-  title: string;
-}
+import {TagListChartProps} from 'chart';
+import RankCard from '@components/cards/RankCard';
 
 const TagListChart = ({data, title}: TagListChartProps) => {
   return (

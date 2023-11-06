@@ -12,29 +12,29 @@ import TagListChart from '@components/charts/hashtags/TagListChart';
 const ChartScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const {data: myTagData} = useQuery(['MyHashtag'], () =>
-    getHashtagFrequency(),
-  );
-  const {data: tagData} = useQuery(['Hashtag'], () => getHashtagTrends());
+  const myHashtagQuery = useQuery(['MyHashtag'], () => getHashtagFrequency());
+  const hashtagQuery = useQuery(['Hashtag'], () => getHashtagTrends());
 
-  console.log(myTagData);
-  console.log(tagData);
+  const {data: myTagData, isSuccess: myHashtagSuccess} = myHashtagQuery;
+  const {data: tagData, isSuccess: hashtagSuccess} = hashtagQuery;
 
+  /* TagChart의 데이터가 없는 경우 아예 렌더링 되지 않는 방식.
+  추후 skeleton을 추가해 falsy한 data일 경우에도 Chart 자체가 렌더링될 수 있도록 변경 예정. */
   return (
     <View style={styles.block}>
       <Header title="통계"></Header>
       <ScrollView style={styles.contents}>
         <View style={styles.container}>
-          <TagListChart
-            title="내 해시태그"
-            data={myTagData.result}></TagListChart>
+          {myHashtagSuccess && (
+            <TagListChart title="내 태그" data={myTagData}></TagListChart>
+          )}
         </View>
       </ScrollView>
       <ScrollView style={styles.contents}>
         <View style={styles.container}>
-          <TagListChart
-            title="이달의 해시태그"
-            data={tagData.result}></TagListChart>
+          {hashtagSuccess && (
+            <TagListChart title="이달의 태그" data={tagData}></TagListChart>
+          )}
         </View>
       </ScrollView>
     </View>
